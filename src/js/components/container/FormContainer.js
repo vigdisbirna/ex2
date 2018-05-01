@@ -1,6 +1,8 @@
 import React, { Component } from "react";
 import ReactDOM from "react-dom";
 import Input from "../presentational/Input";
+import Layout from "../layout/Layout";
+
 class FormContainer extends Component {
   constructor() {
     super();
@@ -17,7 +19,7 @@ class FormContainer extends Component {
     return (
       <form id="article-form">
         <Input
-          text="SEO title"
+          text="Blackthorn Pruning"
           label="seo_title"
           type="text"
           id="seo_title"
@@ -30,5 +32,5 @@ class FormContainer extends Component {
 }
 export default FormContainer;
 
-const wrapper = document.getElementById("create-article-form");
-wrapper ? ReactDOM.render(<FormContainer />, wrapper) : false;
+//const wrapper = document.getElementById("app");
+//wrapper ? ReactDOM.render(<Layout />, wrapper) : false;

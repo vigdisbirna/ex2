@@ -1,2 +1,2 @@
-import FormContainer from "./js/components/container/FormContainer";
+import Layout from "./js/components/layout/Layout";
 
