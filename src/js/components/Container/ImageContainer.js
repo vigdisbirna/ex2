@@ -12,12 +12,12 @@ export default class ImageContainer extends React.Component {
 
     componentDidMount() {
         this.initialize();        
-        var intv = setInterval(this.loadData(), 40000);
+        var intv = setInterval(this.loadData.bind(this), 20000);
         this.setState({interval: intv});
     }
 
     componentWillUnmount() {
-        print('componentWillUnmount');
+        print('yo:componentWillUnmount');
         clearInterval(this.state.interval);
     }
 
@@ -38,6 +38,7 @@ export default class ImageContainer extends React.Component {
                 console.log(this.state.image_arr)
         });
     }
+
     loadData() {
         console.log('About to send post !')
         //(if pos_count > 0 || neg_count > 0) 
