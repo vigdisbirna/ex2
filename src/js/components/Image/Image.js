@@ -5,12 +5,13 @@ export default class Image extends React.Component {
     constructor() {
         super();
         this.state = { source: null};
+        this.state = { id: '4' };
     }
 
     componentDidMount() {
     axios
       .get(
-        'http://localhost/~ThorhildurThorleiksdottir/foo/2.jpg',
+        'http://localhost/~ThorhildurThorleiksdottir/foo/' + this.state.id + '.jpg',
         { responseType: 'arraybuffer' },
       )
       .then(response => {
@@ -25,8 +26,8 @@ export default class Image extends React.Component {
   }
 
   render() {
-  
+
     console.log(this.state.source);
-    return <img src={this.state.source} alt="image" />;
+    return <img src={this.state.source} alt="image-test" />;
   }
 }

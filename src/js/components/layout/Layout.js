@@ -4,6 +4,7 @@ import ReactDOM from "react-dom";
 import Header from "./Header";
 import Footer from "./Footer";
 import Image from "../Image/Image";
+import ImageContainer from "../Container/ImageContainer"
 
 export default class Layout extends React.Component {
 
@@ -16,14 +17,18 @@ export default class Layout extends React.Component {
 
     changeTitle(title) {
         this.setState({title: title});
-        }
+    }
 
     render () {
 
-        let array = ["1", "2", "3", "4", "5"];
-
-        let images = array.map(image => {
-            return <img key={image} src={require(`/Users/ThorhildurThorleiksdottir/Desktop/image_thumbnail/${image}.png`)} alt="" className="img-responsive" />
+        const images = [
+            "1", 
+            "2", 
+            "3", 
+            "4", 
+            "5"]
+        .map((img, i) => {
+            return <img key={i} src={require(`/Users/ThorhildurThorleiksdottir/Desktop/image_thumbnail/${img}.png`)} alt="" className="img-responsive" />
          });
 
         return (
@@ -31,15 +36,13 @@ export default class Layout extends React.Component {
             <div> 
                 <Header changeTitle={this.changeTitle.bind(this)} title={this.state.title} /> 
                 <Footer /> 
-                <div className="col-xs-12 col-sm-6 col-md-6 col-lg-6">
-                       { images }
-                </div>
                 <Image />
+                <ImageContainer />
             </div>
         );
     }
 } 
 
 /* Rendering the layout */
-const wrapper = document.getElementById("app");
-wrapper ? ReactDOM.render(<Layout />, wrapper) : false;
+//const wrapper = document.getElementById("app");
+//wrapper ? ReactDOM.render(<Layout />, wrapper) : false;

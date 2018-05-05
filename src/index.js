@@ -1,2 +1,1 @@
-import Layout from "./js/components/layout/Layout";
-
+import "./js/client.js";
