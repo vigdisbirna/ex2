@@ -60,18 +60,12 @@ export default class ImageContainer extends React.Component {
     }
 
     render() {
-        const Images = [
-            1,
-            2,
-            3,
-            4,
-            5
-        ].map((id, i) => <Image key={i} id={id}/>);
+        const Images = Array.from(Array(24).keys()).map((id, i) => <Image key={i} id={id}/>);
 
         return (
             <div>
                 <div>
-                    <div>{Images}</div>
+                    <div className="container">{Images}</div>
                 </div> 
             </div>
         );
