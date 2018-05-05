@@ -29,6 +29,6 @@ export default class Image extends React.Component {
   render() {
 
 
-    return <img src={this.state.source} alt="image-test" />;
+    return <img src={this.state.source} alt="image-test" class="border border-light" />;
   }
 }
