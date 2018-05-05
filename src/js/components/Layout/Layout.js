@@ -33,7 +33,7 @@ export default class Layout extends React.Component {
 
         return (
         
-            <div class="container"> 
+            <div className="container"> 
                 <Header changeTitle={this.changeTitle.bind(this)} title={this.state.title} />  
                 <ImageContainer />
             </div>

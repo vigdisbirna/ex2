@@ -19,7 +19,7 @@ export default class ImageContainer extends React.Component {
         return (
             <div>
                 <div>
-                    <div class="container">{Images}</div>
+                    <div className="container">{Images}</div>
                 </div> 
             </div>
         );
