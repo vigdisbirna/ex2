@@ -13,16 +13,16 @@ export default class ImageContainer extends React.Component {
         this.state = { image_arr: [], pos_arr: [], interval: null};
     }
 
-    componentDidMount() {
+    /*componentDidMount() {
         this.initialize();        
         var intv = setInterval(this.loadData.bind(this), 200000);
         this.setState({interval: intv});
-    }
+    }*/
 
-    componentWillUnmount() {
+    /*componentWillUnmount() {
         print('yo:componentWillUnmount');
         clearInterval(this.state.interval);
-    }
+    }*/
 
     initialize() {
         console.log('sending Get !')
@@ -54,7 +54,7 @@ export default class ImageContainer extends React.Component {
         console.log("pos_arr in loadData is:");
         console.log(this.state.pos_arr);
 
-        if(this.state.pos_arr.length != 0 /* and this.state.neg_arr.length*/) {
+        if(this.state.pos_arr.length != 0 /*and this.state.neg_arr.length*/) {
             axios({
                 method: 'post',
                 url: 'http://localhost:5000/learn',
@@ -76,7 +76,7 @@ export default class ImageContainer extends React.Component {
         else {
             console.log('Not enough data');
         }
-    }
+}
 
     row(Images,counter){
         var column = [];
@@ -105,8 +105,8 @@ export default class ImageContainer extends React.Component {
     }
 
     render() {
-        const Images = this.state.image_arr.map((id, i) => <Image key={i} id={id}/>);
-        //const Images = Array.from(Array(25).keys()).map((id, i) => <Image key={i} id={id}/>);
+        //const Images = this.state.image_arr.map((id, i) => <Image key={i} id={id}/>);
+        const Images = Array.from(Array(25).keys()).map((id, i) => <Image key={i} id={id}/>);
         return (      
             <div className="container-fluid">
                 <div className="row">
