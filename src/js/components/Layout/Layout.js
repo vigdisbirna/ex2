@@ -28,7 +28,7 @@ export default class Layout extends React.Component {
             "4", 
             "5"]
         .map((img, i) => {
-            return <img key={i} src={require(`/Users/ThorhildurThorleiksdottir/Desktop/image_thumbnail/${img}.png`)} alt="" className="img-responsive" />
+            return <img key={i} src="" alt="" className="img-responsive" />
          });
 
         return (
