@@ -3,6 +3,8 @@ import axios from 'axios';
 import PropTypes from 'prop-types';
 import Image from "../Image/Image";
 import Positives from "../Positives/Positives"
+import PositiveContainer from "./PositiveContainer";
+import NegativeContainer from "./NegativeContainer";
 
 export default class ImageContainer extends React.Component {
 
@@ -13,7 +15,7 @@ export default class ImageContainer extends React.Component {
 
     componentDidMount() {
         this.initialize();        
-        var intv = setInterval(this.loadData.bind(this), 100000);
+        var intv = setInterval(this.loadData.bind(this), 200000);
         this.setState({interval: intv});
     }
 
@@ -76,17 +78,48 @@ export default class ImageContainer extends React.Component {
         }
     }
 
+    row(Images,counter){
+        var column = [];
+        var num = 5;
+        for (var i = 0; i < num; i++) {
+            column.push( 
+            <div key = {counter} className="col">
+                {Images[counter]}
+            </div>);
+            counter = counter + 1;
+         } 
+         return column;
+    }
+
+    grid(Images){
+        var rows = [];
+        var counter = 0;
+        var num = 5;
+        for (var j = 0; j < num; j++) {
+           rows.push( <div key = {counter} className="row">
+                {this.row(Images, counter)}
+            </div>);
+            counter = counter + num;
+        }
+        return rows;
+    }
+
     render() {
         const Images = this.state.image_arr.map((id, i) => <Image key={i} id={id}/>);
-
-        return (
-            <div>
-                <div>
-                    <div className="container">{Images}</div>
-                    <div>
-                        <Positives callBackFromParent={this.myCallBack.bind(this)}/>
+        //const Images = Array.from(Array(25).keys()).map((id, i) => <Image key={i} id={id}/>);
+        return (      
+            <div className="container-fluid">
+                <div className="row">
+                    <div className="col border border-danger">
+                        <NegativeContainer />
                     </div>
-                </div> 
+                    <div className="col-8">
+                        {this.grid(Images)}
+                    </div>
+                    <div className="col border border-success">
+                        <PositiveContainer callBackFromParent={this.myCallBack.bind(this)}/>
+                    </div>
+                </div>
             </div>
         );
     }
