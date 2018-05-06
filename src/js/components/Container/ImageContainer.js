@@ -2,27 +2,32 @@ import React from "react";
 import axios from 'axios';
 import PropTypes from 'prop-types';
 import Image from "../Image/Image";
+import Square from "../Square/Square";
 import Positives from "../Positives/Positives"
 import PositiveContainer from "./PositiveContainer";
 import NegativeContainer from "./NegativeContainer";
 
 export default class ImageContainer extends React.Component {
 
-    constructor() {
-        super();
-        this.state = { image_arr: [], pos_arr: [], interval: null};
+    constructor(props) {
+        super(props);
+        this.state = {image_arr: Array.from(Array(50).keys()), vis_arr: Array.from(Array(25).keys()),  pos_arr: [], interval: null, Images: null};
+        //this.changeOnClick = this.changeOnClick.bind(this)
+    
     }
 
     /*componentDidMount() {
-        this.initialize();        
-        var intv = setInterval(this.loadData.bind(this), 200000);
-        this.setState({interval: intv});
+        //this.initialize();        
+        //var intv = setInterval(this.loadData.bind(this), 200000);
+        //this.setState({interval: intv});
+        this.setState({Images: this.state.vis_arr.map((id, i) => <Image key={i} id = {id} imageId={id} changeOnClickFromContainer={this.changeOnClick.bind(this, id, i)}/>)});
     }*/
 
     /*componentWillUnmount() {
         print('yo:componentWillUnmount');
         clearInterval(this.state.interval);
     }*/
+
 
     initialize() {
         console.log('sending Get !')
@@ -76,7 +81,28 @@ export default class ImageContainer extends React.Component {
         else {
             console.log('Not enough data');
         }
-}
+    }
+
+    changeOnClick(img_id,i) {
+        //console.log(img);
+        var temp = this.state.vis_arr;
+        var arr = this.state.image_arr;
+
+        temp[i] = arr[0];
+        console.log("changeOnClick");
+        console.log(temp[i]);
+        console.log(i);
+
+        arr.shift();
+
+        this.setState(prevState => ({
+            pos_arr: [...prevState.pos_arr, img_id],
+            image_arr: arr,
+            vis_arr: temp
+        }));
+       // setTimeout(console.log(this.state.vis_arr), 3000);
+
+    }
 
     row(Images,counter){
         var column = [];
@@ -85,6 +111,7 @@ export default class ImageContainer extends React.Component {
             column.push( 
             <div key = {counter} className="col">
                 {Images[counter]}
+            
             </div>);
             counter = counter + 1;
          } 
@@ -105,8 +132,12 @@ export default class ImageContainer extends React.Component {
     }
 
     render() {
-        //const Images = this.state.image_arr.map((id, i) => <Image key={i} id={id}/>);
-        const Images = Array.from(Array(25).keys()).map((id, i) => <Image key={i} id={id}/>);
+
+        const Images = this.state.vis_arr.map((id, i) => <Image key={i} id={id} imageId={id} changeOnClickFromContainer={this.changeOnClick.bind(this, id, i)}/>);
+        //const Images = Array.from(Array(50).keys()).map((id, i) => <Image key={i} id={id}/>);
+        console.log("render");
+        console.log(this.state.vis_arr);
+        console.log(Images);
         return (      
             <div className="container-fluid">
                 <div className="row">
@@ -117,7 +148,7 @@ export default class ImageContainer extends React.Component {
                         {this.grid(Images)}
                     </div>
                     <div className="col border border-success">
-                        <PositiveContainer callBackFromParent={this.myCallBack.bind(this)}/>
+                        <PositiveContainer imageIdFromParent={this.state.pos_arr} /*callBackFromParent={this.myCallBack.bind(this)}*//>
                     </div>
                 </div>
             </div>
