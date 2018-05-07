@@ -1,6 +1,7 @@
 import React from "react";
 import axios from 'axios';
 import PropTypes from 'prop-types';
+import ImageHover from "../Image/ImageHover";
 import Image from "../Image/Image";
 import Square from "../Square/Square";
 import Positives from "../Positives/Positives"
@@ -11,7 +12,7 @@ export default class ImageContainer extends React.Component {
 
     constructor(props) {
         super(props);
-        this.state = {image_arr: Array.from(Array(50).keys()), vis_arr: Array.from(Array(25).keys()),  pos_arr: [], interval: null, Images: null};
+        this.state = {image_arr: Array.from(Array(50).keys()), vis_arr: Array.from(Array(25).keys()),  pos_arr: [], neg_arr: [], interval: null, Images: null};
         //this.changeOnClick = this.changeOnClick.bind(this)
     
     }
@@ -83,7 +84,7 @@ export default class ImageContainer extends React.Component {
         }
     }
 
-    changeOnClick(img_id,i) {
+    changeOnClickPos(img_id,i) {
         //console.log(img);
         var temp = this.state.vis_arr;
         var arr = this.state.image_arr;
@@ -104,12 +105,33 @@ export default class ImageContainer extends React.Component {
 
     }
 
+    changeOnClickNeg(img_id,i) {
+        //console.log(img);
+        var temp = this.state.vis_arr;
+        var arr = this.state.image_arr;
+
+        temp[i] = arr[0];
+        console.log("changeOnClick");
+        console.log(temp[i]);
+        console.log(i);
+
+        arr.shift();
+
+        this.setState(prevState => ({
+            neg_arr: [...prevState.neg_arr, img_id],
+            image_arr: arr,
+            vis_arr: temp
+        }));
+       // setTimeout(console.log(this.state.vis_arr), 3000);
+
+    }
+
     row(Images,counter){
         var column = [];
         var num = 5;
         for (var i = 0; i < num; i++) {
             column.push( 
-            <div key = {counter} className="col">
+            <div key = {counter} className="col-">
                 {Images[counter]}
             
             </div>);
@@ -133,7 +155,9 @@ export default class ImageContainer extends React.Component {
 
     render() {
 
-        const Images = this.state.vis_arr.map((id, i) => <Image key={i} id={id} imageId={id} changeOnClickFromContainer={this.changeOnClick.bind(this, id, i)}/>);
+        const Images = this.state.vis_arr.map((id, i) =>
+            <ImageHover key={i} id={id} imageId={id} changeOnClickPosFromContainer={this.changeOnClickPos.bind(this, id, i)} changeOnClickNegFromContainer={this.changeOnClickNeg.bind(this, id, i)}/>
+        );
         //const Images = Array.from(Array(50).keys()).map((id, i) => <Image key={i} id={id}/>);
         console.log("render");
         console.log(this.state.vis_arr);
@@ -141,14 +165,14 @@ export default class ImageContainer extends React.Component {
         return (      
             <div className="container-fluid">
                 <div className="row">
-                    <div className="col border border-danger">
-                        <NegativeContainer />
+                    <div className="border border-danger col">
+                        <NegativeContainer negImageIdFromParent={this.state.neg_arr}/>
                     </div>
-                    <div className="col-8">
+                    <div className="col-md-auto">
                         {this.grid(Images)}
                     </div>
-                    <div className="col border border-success">
-                        <PositiveContainer imageIdFromParent={this.state.pos_arr} /*callBackFromParent={this.myCallBack.bind(this)}*//>
+                    <div className="border border-success col">
+                        <PositiveContainer posImageIdFromParent={this.state.pos_arr} /*callBackFromParent={this.myCallBack.bind(this)}*//>
                     </div>
                 </div>
             </div>

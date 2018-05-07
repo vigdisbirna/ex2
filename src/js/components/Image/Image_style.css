@@ -1,0 +1,29 @@
+div.show-image {
+    position: relative;
+    float:left;
+    margin: 5.5px;
+  
+}
+div.show-image:hover img{
+    opacity:1;
+}
+div.show-image:hover input {
+    display: block;
+}
+div.show-image input {
+    position:absolute;
+    display:none;
+}
+div.show-image input.negative {
+    bottom:0;
+    left:0;
+}
+div.show-image input.positive {
+    bottom:0;
+    right:0;
+}
+
+img {
+    height: 100px;
+    width: 100px;
+}
