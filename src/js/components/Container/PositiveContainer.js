@@ -2,7 +2,6 @@ import React from "react";
 import axios from 'axios';
 import PropTypes from 'prop-types';
 import Image from "../Image/Image";
-import Square from "../Square/Square";
 
 export default class PositiveContainer extends React.Component {
 	constructor() {
