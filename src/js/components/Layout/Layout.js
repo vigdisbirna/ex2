@@ -36,6 +36,7 @@ export default class Layout extends React.Component {
             <div className="container"> 
                 <Header changeTitle={this.changeTitle.bind(this)} title={this.state.title} />  
                 <ImageContainer />
+                <Footer />
             </div>
         );
     }

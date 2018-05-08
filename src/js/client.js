@@ -1,5 +1,6 @@
 import React from "react";
 import ReactDOM from "react-dom";
+import "../css/custom.css";
 
 import Layout from "./components/Layout/Layout";
 

@@ -1,0 +1,31 @@
+h1 {
+    color: #ffdd00;
+}
+body {
+    background-color: black;
+}
+
+div.border-success {
+    background-color: #28a74670;
+}
+
+div.border-success h5 {
+    color: #28a746;
+}
+
+div.border-danger {
+    background-color: #dc354662;
+}
+
+div.border-danger h5{
+    color: #dc3546;
+}
+
+img.selected {
+    margin: 5.5px;
+}
+
+p.love {
+    color: #ffdd00;
+    font-size: 11px;
+}

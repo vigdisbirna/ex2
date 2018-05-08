@@ -6,7 +6,11 @@ div.show-image {
 }
 div.show-image:hover img{
     opacity:1;
+    border-width:1%;
+    border-style: solid;
+    border-color: #ffdd00;
 }
+
 div.show-image:hover input {
     display: block;
 }
@@ -15,12 +19,12 @@ div.show-image input {
     display:none;
 }
 div.show-image input.negative {
-    bottom:0;
-    left:0;
+    bottom:2%;
+    left:2%;
 }
 div.show-image input.positive {
-    bottom:0;
-    right:0;
+    bottom:2%;
+    right:2%;
 }
 
 img {

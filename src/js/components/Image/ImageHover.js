@@ -51,7 +51,7 @@ export default class ImageHover extends React.Component {
   render() {
     return (
       <div className="show-image">
-        <img src={this.state.source} alt={this.props.imageId} className="d-flex justify-content-center border border-light rounded" />
+        <img src={this.state.source} alt={this.props.imageId} className="d-flex justify-content-center rounded" />
         <input onClick={this.props.changeOnClickPosFromContainer} className="positive btn btn-success btn-sm" type="button" value="+" />
         <input onClick={this.props.changeOnClickNegFromContainer} className="negative btn btn-danger btn-sm" type="button" value="-" />
       </div>
