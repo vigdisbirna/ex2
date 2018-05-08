@@ -28,4 +28,10 @@ img.selected {
 p.love {
     color: #ffdd00;
     font-size: 11px;
+    margin-top: 2%;
+}
+
+div.header-room {
+    margin-bottom: 1%;
+    margin-top:1%;
 }

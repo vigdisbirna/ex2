@@ -57,11 +57,10 @@ export default class PositiveContainer extends React.Component {
       
         return (
             <div>
-                <h5 className="d-flex justify-content-center">Positive</h5>
                 {this.renderList(this.props.posImageIdFromParent)}
             </div>
         );
     }
 }
-
+//<h5 className="d-flex justify-content-center">Positive</h5>
 //<p onClick={this.changeOnClick.bind(this)}>This is pos list</p>
