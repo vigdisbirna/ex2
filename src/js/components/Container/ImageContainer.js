@@ -57,18 +57,24 @@ export default class ImageContainer extends React.Component {
         console.log("pos_arr in loadData is:");
         console.log(this.state.pos_arr);
 
+        console.log("neg_arr in loadData is:");
+        console.log(this.state.neg_arr);
+
         if(this.state.pos_cnt != 0 && this.state.neg_cnt != 0) {
             var pos_send = [];
             var neg_send = [];
             var i = 0;
-            var size = this.state.pos_arr.length -1;
+            var pos_size = this.state.pos_arr.length -1;
+            var neg_size = this.state.neg_arr.length -1;
             while(i < this.state.pos_cnt) {
-                pos_send.push(this.state.pos_arr[size- i]);
+                pos_send.push(this.state.pos_arr[pos_size- i]);
                 i++;
             }
             i = 0
+            console.log('neg cnt');
+            console.log(this.state.neg_cnt)
             while(i < this.state.neg_cnt) {
-                neg_send.push(this.state.neg_arr[size- i]);
+                neg_send.push(this.state.neg_arr[neg_size- i]);
                 i++;
             }
             console.log('pos_send');
