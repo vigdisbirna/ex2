@@ -8,10 +8,10 @@ export default class Image extends React.Component {
     }
 
     componentDidMount() {
-
         axios
         .get(
-            'http://localhost/~ThorhildurThorleiksdottir/foo/' + this.props.imageId.toString() + '.jpg',
+            //'http://localhost/~ThorhildurThorleiksdottir/foo/' + this.props.imageId.toString() + '.jpg',
+            'http://192.168.1.100/~ThorhildurThorleiksdottir/foo/' + this.props.imageId.toString() + '.jpg',
             { responseType: 'arraybuffer' },
           )
           .then(response => {
@@ -30,7 +30,8 @@ export default class Image extends React.Component {
         
         axios
         .get(
-            'http://localhost/~ThorhildurThorleiksdottir/foo/' + this.props.imageId.toString() + '.jpg',
+            //'http://localhost/~ThorhildurThorleiksdottir/foo/' + this.props.imageId.toString() + '.jpg',
+            'http://192.168.1.100/~ThorhildurThorleiksdottir/foo/' + this.props.imageId.toString() + '.jpg',
             { responseType: 'arraybuffer' },
           )
           .then(response => {
