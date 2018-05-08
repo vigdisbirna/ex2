@@ -26,9 +26,10 @@ export default class NegativeContainer extends React.Component {
       
         return (
             <div>
-                <h5 className="d-flex justify-content-center">Negative</h5>
                 {this.renderList(this.props.negImageIdFromParent)}
             </div>
         );
     }
 }
+
+//<h5 className="d-flex justify-content-center">Negative</h5>
