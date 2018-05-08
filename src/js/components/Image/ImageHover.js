@@ -13,7 +13,7 @@ export default class ImageHover extends React.Component {
         axios
         .get(
             //'http://localhost/~ThorhildurThorleiksdottir/foo/' + this.props.imageId.toString() + '.jpg',
-            'http://192.168.1.100/~ThorhildurThorleiksdottir/foo/' + this.props.imageId.toString() + '.jpg',
+            'http://192.168.1.100/~ThorhildurThorleiksdottir/images/' + this.props.imageId.toString() + '.jpg',
             { responseType: 'arraybuffer' },
           )
           .then(response => {
@@ -33,7 +33,7 @@ export default class ImageHover extends React.Component {
         axios
         .get(
             //'http://localhost/~ThorhildurThorleiksdottir/foo/' + this.props.imageId.toString() + '.jpg',
-            'http://192.168.1.100/~ThorhildurThorleiksdottir/foo/' + this.props.imageId.toString() + '.jpg',
+            'http://192.168.1.100/~ThorhildurThorleiksdottir/images/' + this.props.imageId.toString() + '.jpg',
             //'http://192.168.1.100/~ThorhildurThorleiksdottir/foo/1.jpg',
             { responseType: 'arraybuffer' },
           )

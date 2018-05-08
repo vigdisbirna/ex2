@@ -21,8 +21,6 @@ export default class Positives extends React.Component {
 		}));
 	}
 	render() { 
-		var new_pos = [1,2,3]; //this will actually be just cnt newest from total list
-		
 		return (
 			<p onClick={this.changeOnClick.bind(this)}>This is pos list</p>
 		);
