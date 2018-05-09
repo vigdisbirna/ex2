@@ -5,8 +5,9 @@ import ImageHover from "../Image/ImageHover";
 import Image from "../Image/Image";
 import PositiveContainer from "./PositiveContainer";
 import NegativeContainer from "./NegativeContainer";
-import ResetButton from "../Buttons/ResetButton"
+import ResetButton from "../Buttons/ResetButton";
 import NewStartButton from "../Buttons/NewStartButton"
+import ShowPositive from "../Buttons/ShowPositive"
 
 export default class ImageContainer extends React.Component {
 
@@ -243,6 +244,7 @@ export default class ImageContainer extends React.Component {
                     </div>
                     <div className="border border-success col">
                         <PositiveContainer posImageIdFromParent={this.state.pos_arr} /*callBackFromParent={this.myCallBack.bind(this)}*//>
+                        <ShowPositive />
                     </div>
                 </div>
                 <div className="reset-room">

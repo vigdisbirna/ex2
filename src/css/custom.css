@@ -45,5 +45,11 @@ button.reset {
     background-color: black;
     border: 1px solid #ffdd00;
     color: #ffdd00;
+    margin-left: 1%;
+    margin-right: 1%;
+}
+
+div.border-success button.posAll{
+    bottom:1%;
 }
 

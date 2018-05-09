@@ -7,7 +7,7 @@ export default class NewStartButton extends React.Component {
 
     render() {
     	return (
-      		<button onClick={this.props.startOverOnClickFromBtn} className='btn btn-warning reset'>Start Over</button>
+      		<button className='btn btn-warning reset'>Start Over</button>
     	);
   }
 }

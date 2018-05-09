@@ -6,7 +6,6 @@ import Image from "../Image/Image";
 export default class PositiveContainer extends React.Component {
 	constructor() {
 		super();
-		//this.state = {pos: []};
     }
     
     //componentWillReceiveProps() {
