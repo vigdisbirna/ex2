@@ -4,6 +4,7 @@ import Header from "./Header";
 import Footer from "./Footer";
 import Image from "../Image/Image";
 import ImageContainer from "../Container/ImageContainer"
+import Popup from "reactjs-popup";
 
 
 export default class Layout extends React.Component {
@@ -19,21 +20,13 @@ export default class Layout extends React.Component {
         this.setState({title: title});
     }
 
+
     render () {
 
-        const images = [
-            "1", 
-            "2", 
-            "3", 
-            "4", 
-            "5"]
-        .map((img, i) => {
-            return <img key={i} src="" alt="" className="img-responsive" />
-         });
 
         return (
             <div className="container"> 
-                <Header changeTitle={this.changeTitle.bind(this)} title={this.state.title} />  
+                <Header changeTitle={this.changeTitle.bind(this)} title={this.state.title} /> 
                 <ImageContainer />
                 <Footer />
             </div>

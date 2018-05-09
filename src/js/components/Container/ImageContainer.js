@@ -9,6 +9,10 @@ import ResetButton from "../Buttons/ResetButton";
 import NewStartButton from "../Buttons/NewStartButton"
 import ShowPositive from "../Buttons/ShowPositive"
 import Popup from "reactjs-popup";
+import scrollArea from "react-scrollbar";
+import 'react-perfect-scrollbar/dist/css/styles.css'
+import PerfectScrollbar from 'react-perfect-scrollbar';
+
 
 export default class ImageContainer extends React.Component {
 
@@ -17,6 +21,7 @@ export default class ImageContainer extends React.Component {
        //this.state = {image_arr: [], vis_arr: [],  pos_arr: [], neg_arr: [], interval: null, pos_cnt: 0, neg_cnt: 0};
         this.state = {image_arr: Array.from(Array(50).keys()), vis_arr: Array.from(Array(50).keys()),  pos_arr: [], neg_arr: [], interval: null, pos_cnt: 0, neg_cnt: 0};
     }
+
 
     componentDidMount() {
        /* this.initialize();        
@@ -39,38 +44,36 @@ export default class ImageContainer extends React.Component {
     }
 
     popup() {
+
+    var contentStyle = {
+        maxWidth: "710px",
+        maxHeight: "710px",
+        height: "80%",
+        width: "80%",
+        
+    };
+
+    //const container = document.querySelector('#container-scroll');
+
+    //const ps = new PerfectScrollbar(container);
+
+
+    const Images = this.state.pos_arr.map((id, i) =>
+    <Image key={i} id={id} imageId={id} changeOnClickPosFromContainer={this.changeOnClickPos.bind(this, id, i)} changeOnClickNegFromContainer={this.changeOnClickNeg.bind(this, id, i)} changeOnClickSkipFromContainer={this.changeOnClickSkip.bind(this,id,i)}/>
+        );
+
+
         return(
-            <Popup trigger={<button className='btn btn-success posAll'>Show all</button>} position="top center" closeOnDocumentClick>
-                {close => (
-                    <div className="modal">
-                        <a className="close" onClick={close}>
-                          &times;
-                        </a>
-                        <div className="header"> Modal Title </div>
-                        <div className="content">
-                          {" "}
-                          Lorem ipsum dolor sit amet consectetur adipisicing elit. Atque, a
-                          nostrum. Dolorem, repellat quidem ut, minima sint vel eveniet
-                          quibusdam voluptates delectus doloremque, explicabo tempore dicta
-                          adipisci fugit amet dignissimos?
-                          <br />
-                          Lorem ipsum dolor sit amet, consectetur adipisicing elit. Consequatur
-                          sit commodi beatae optio voluptatum sed eius cumque, delectus saepe
-                          repudiandae explicabo nemo nam libero ad, doloribus, voluptas rem
-                          alias. Vitae?
-                        </div>
-                        <button
-                            className="button"
-                            onClick={() => {
-                              console.log("modal closed ");
-                              close();
-                            }}
-                        >
-                        close modal
-                        </button>
+            <Popup trigger={<button className='btn btn-success posAll'>Show all</button>} modal closeOnDocumentClick contentStyle={contentStyle}>
+         
+                    <div id="container-scroll" className="content">
+                   
+                            {this.grid(Images)}
+                       
                     </div>
-                )}
+               
             </Popup>
+        
         );
     };
 
@@ -297,7 +300,9 @@ export default class ImageContainer extends React.Component {
                     <ResetButton resetOnClickFromBtn={this.resetOnClick.bind(this)}/>
                     <NewStartButton startOverOnClickFromBtn={this.startOverOnClick.bind(this)}/>
                 </div>
+
             </div>
+            
         );
     }
 }
