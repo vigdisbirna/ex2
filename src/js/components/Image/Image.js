@@ -11,7 +11,7 @@ export default class Image extends React.Component {
         axios
         .get(
             //'http://localhost/~ThorhildurThorleiksdottir/foo/' + this.props.imageId.toString() + '.jpg',
-            'http://192.168.1.100/~ThorhildurThorleiksdottir/images/' + this.props.imageId.toString() + '.jpg',
+            'http://192.168.1.100/~ThorhildurThorleiksdottir/images/placing-test-thumbnails/' + this.props.imageId.toString() + '.jpg',
             { responseType: 'arraybuffer' },
           )
           .then(response => {
@@ -31,7 +31,7 @@ export default class Image extends React.Component {
         axios
         .get(
             //'http://localhost/~ThorhildurThorleiksdottir/foo/' + this.props.imageId.toString() + '.jpg',
-            'http://192.168.1.100/~ThorhildurThorleiksdottir/images/' + this.props.imageId.toString() + '.jpg',
+            'http://192.168.1.100/~ThorhildurThorleiksdottir/images/placing-test-thumbnails/' + this.props.imageId.toString() + '.jpg',
             { responseType: 'arraybuffer' },
           )
           .then(response => {
@@ -42,6 +42,13 @@ export default class Image extends React.Component {
               ),
             );
             this.setState({ source: "data:;base64," + base64 });
+          })
+          .catch(function (error) {
+            if (error.response) {
+              console.log(error.response.data);
+              console.log(error.response.status);
+              console.log(error.response.headers);
+            }
           });
         }
       }
