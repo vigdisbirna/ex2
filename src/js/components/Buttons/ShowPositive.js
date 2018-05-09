@@ -7,7 +7,7 @@ export default class ShowPositive extends React.Component {
 
     render() {
     	return (
-      		<button onClick={this.props.startOverOnClickFromBtn} className='btn btn-success posAll'>Show all</button>
+      		<button className='btn btn-success posAll'>Show all</button>
     	);
   }
 }
