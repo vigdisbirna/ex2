@@ -22,6 +22,13 @@ export default class Image extends React.Component {
               ),
             );
             this.setState({ source: "data:;base64," + base64 });
+          })
+          .catch(error => {
+              console.log(error.response.data);
+              console.log(error.response.status);
+              console.log(error.response.headers);
+              
+              this.setState({ source: "/src/assets/notFound.jpg"});
           });
       }
 
@@ -43,12 +50,12 @@ export default class Image extends React.Component {
             );
             this.setState({ source: "data:;base64," + base64 });
           })
-          .catch(function (error) {
-            if (error.response) {
+          .catch(error => {
               console.log(error.response.data);
               console.log(error.response.status);
               console.log(error.response.headers);
-            }
+              
+              this.setState({ source: "/src/assets/notFound.jpg"});
           });
         }
       }

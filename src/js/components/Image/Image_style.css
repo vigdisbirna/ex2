@@ -26,6 +26,10 @@ div.show-image input.positive {
     bottom:2%;
     right:2%;
 }
+div.show-image input.skip {
+    top:1.5%;
+    right:2%;
+}
 
 img {
     height: 120px;

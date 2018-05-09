@@ -10,13 +10,14 @@ export default class ImageContainer extends React.Component {
 
     constructor(props) {
         super(props);
-        this.state = {image_arr: [], vis_arr: [],  pos_arr: [], neg_arr: [], interval: null, pos_cnt: 0, neg_cnt: 0};
+       this.state = {image_arr: [], vis_arr: [],  pos_arr: [], neg_arr: [], interval: null, pos_cnt: 0, neg_cnt: 0};
+        //this.state = {image_arr: Array.from(Array(50).keys()), vis_arr: Array.from(Array(50).keys()),  pos_arr: [], neg_arr: [], interval: null, pos_cnt: 0, neg_cnt: 0};
     }
 
     componentDidMount() {
-        this.initialize();        
+       /* this.initialize();        
         var intv = setInterval(this.loadData.bind(this), 50000);
-        this.setState({interval: intv});
+        this.setState({interval: intv});*/
     }
 
     componentWillUnmount() {
@@ -146,6 +147,26 @@ export default class ImageContainer extends React.Component {
 
     }
 
+
+    changeOnClickSkip(img_id,i) {
+        //console.log(img);
+        var temp = this.state.vis_arr;
+        var arr = this.state.image_arr;
+
+        temp[i] = arr[0];
+        console.log("changeOnClick");
+        console.log(temp[i]);
+        console.log(i);
+
+        arr.shift();
+
+        this.setState(prevState => ({
+            image_arr: arr,
+            vis_arr: temp
+        }));
+
+    }
+
     row(Images,counter){
         var column = [];
         var num = 5;
@@ -176,7 +197,7 @@ export default class ImageContainer extends React.Component {
     render() {
 
         const Images = this.state.vis_arr.map((id, i) =>
-            <ImageHover key={i} id={id} imageId={id} changeOnClickPosFromContainer={this.changeOnClickPos.bind(this, id, i)} changeOnClickNegFromContainer={this.changeOnClickNeg.bind(this, id, i)}/>
+            <ImageHover key={i} id={id} imageId={id} changeOnClickPosFromContainer={this.changeOnClickPos.bind(this, id, i)} changeOnClickNegFromContainer={this.changeOnClickNeg.bind(this, id, i)} changeOnClickSkipFromContainer={this.changeOnClickSkip.bind(this,id,i)}/>
         );
         //const Images = Array.from(Array(50).keys()).map((id, i) => <Image key={i} id={id}/>);
         //console.log("render");
