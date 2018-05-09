@@ -12,7 +12,6 @@ export default class ImageHover extends React.Component {
 
         axios
         .get(
-            //'http://localhost/~ThorhildurThorleiksdottir/foo/' + this.props.imageId.toString() + '.jpg',
             'http://192.168.1.100/~ThorhildurThorleiksdottir/images/placing-test-thumbnails/' + this.props.imageId.toString() + '.jpg',
             { responseType: 'arraybuffer' },
           )
@@ -25,11 +24,13 @@ export default class ImageHover extends React.Component {
             );
             this.setState({ source: "data:;base64," + base64 });
           })
-          .catch(function (error) {
+          .catch(error => {
             if (error.response) {
               console.log(error.response.data);
               console.log(error.response.status);
               console.log(error.response.headers);
+
+              this.setState({ source: "/src/assets/notFound.jpg"});
             }
 
           });
@@ -40,9 +41,7 @@ export default class ImageHover extends React.Component {
         
         axios
         .get(
-            //'http://localhost/~ThorhildurThorleiksdottir/foo/' + this.props.imageId.toString() + '.jpg',
             'http://192.168.1.100/~ThorhildurThorleiksdottir/images/placing-test-thumbnails/' + this.props.imageId.toString() + '.jpg',
-            //'http://192.168.1.100/~ThorhildurThorleiksdottir/foo/1.jpg',
             { responseType: 'arraybuffer' },
           )
           .then(response => {
@@ -69,6 +68,7 @@ export default class ImageHover extends React.Component {
       <div className="show-image">
         <img src={this.state.source} alt={this.props.imageId} className="d-flex justify-content-center rounded" />
         <input onClick={this.props.changeOnClickPosFromContainer} className="positive btn btn-success btn-sm" type="button" value="+" />
+        <input onClick={this.props.changeOnClickSkipFromContainer} className="skip btn btn-secondary btn-sm" type="button" value="x" />
         <input onClick={this.props.changeOnClickNegFromContainer} className="negative btn btn-danger btn-sm" type="button" value="-" />
       </div>
     );
