@@ -49,7 +49,15 @@ button.reset {
     margin-right: 1%;
 }
 
-div.border-success button.posAll{
-    bottom:1%;
+div.posAllCont {
+    display:flex;
+    justify-content:flex-end;
+    margin-right:36px; 
 }
+
+button.posAll {
+    bottom:1%;
+    right:5%;
+}
+
 

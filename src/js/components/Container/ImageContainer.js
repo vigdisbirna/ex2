@@ -8,6 +8,7 @@ import NegativeContainer from "./NegativeContainer";
 import ResetButton from "../Buttons/ResetButton";
 import NewStartButton from "../Buttons/NewStartButton"
 import ShowPositive from "../Buttons/ShowPositive"
+import Popup from "reactjs-popup";
 
 export default class ImageContainer extends React.Component {
 
@@ -36,6 +37,42 @@ export default class ImageContainer extends React.Component {
 
         this.initialize();
     }
+
+    popup() {
+        return(
+            <Popup trigger={<button className='btn btn-success posAll'>Show all</button>} position="top center" closeOnDocumentClick>
+                {close => (
+                    <div className="modal">
+                        <a className="close" onClick={close}>
+                          &times;
+                        </a>
+                        <div className="header"> Modal Title </div>
+                        <div className="content">
+                          {" "}
+                          Lorem ipsum dolor sit amet consectetur adipisicing elit. Atque, a
+                          nostrum. Dolorem, repellat quidem ut, minima sint vel eveniet
+                          quibusdam voluptates delectus doloremque, explicabo tempore dicta
+                          adipisci fugit amet dignissimos?
+                          <br />
+                          Lorem ipsum dolor sit amet, consectetur adipisicing elit. Consequatur
+                          sit commodi beatae optio voluptatum sed eius cumque, delectus saepe
+                          repudiandae explicabo nemo nam libero ad, doloribus, voluptas rem
+                          alias. Vitae?
+                        </div>
+                        <button
+                            className="button"
+                            onClick={() => {
+                              console.log("modal closed ");
+                              close();
+                            }}
+                        >
+                        close modal
+                        </button>
+                    </div>
+                )}
+            </Popup>
+        );
+    };
 
     initialize() {
         console.log('sending Get !')
@@ -233,6 +270,7 @@ export default class ImageContainer extends React.Component {
         //console.log("render");
         //console.log(this.state.vis_arr);
         //console.log(Images);
+
         return (      
             <div className="container-fluid">
                 <div className="row">
@@ -244,7 +282,15 @@ export default class ImageContainer extends React.Component {
                     </div>
                     <div className="border border-success col">
                         <PositiveContainer posImageIdFromParent={this.state.pos_arr} /*callBackFromParent={this.myCallBack.bind(this)}*//>
-                        <ShowPositive />
+                    </div>
+                </div>
+                <div className='row'>
+                    <div className='col'>
+                    </div>
+                    <div className='col'>
+                    </div>
+                    <div className='col posAllCont'>
+                        {this.popup()}
                     </div>
                 </div>
                 <div className="reset-room">
