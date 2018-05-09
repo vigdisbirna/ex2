@@ -35,3 +35,15 @@ div.header-room {
     margin-bottom: 1%;
     margin-top:1%;
 }
+
+div.reset-room {
+    display:flex;
+    justify-content:center;
+}
+
+button.reset {
+    background-color: black;
+    border: 1px solid #ffdd00;
+    color: #ffdd00;
+}
+

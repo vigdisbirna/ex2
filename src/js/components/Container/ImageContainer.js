@@ -5,6 +5,8 @@ import ImageHover from "../Image/ImageHover";
 import Image from "../Image/Image";
 import PositiveContainer from "./PositiveContainer";
 import NegativeContainer from "./NegativeContainer";
+import ResetButton from "../Buttons/ResetButton"
+import NewStartButton from "../Buttons/NewStartButton"
 
 export default class ImageContainer extends React.Component {
 
@@ -22,6 +24,15 @@ export default class ImageContainer extends React.Component {
     componentWillUnmount() {
         print('yo:componentWillUnmount');
         clearInterval(this.state.interval);
+    }
+
+    startOverOnClick() {
+        this.setState({
+            pos_arr: [], 
+            neg_arr: []
+        });
+
+        this.initialize();
     }
 
     initialize() {
@@ -146,6 +157,27 @@ export default class ImageContainer extends React.Component {
 
     }
 
+    resetOnClick() {
+        console.log('resetting');
+        axios({
+            method: 'get',
+            url: 'http://localhost:5000/reset',
+            headers: {
+            'Content-Type': 'application/json'
+            }}).then(res => {
+                console.log(res);
+                var tmp = res.data;
+                this.setState({
+                    image_arr: res.data.slice(-25), 
+                    vis_arr: tmp.slice(0,25)
+                });
+                console.log('vis_arr is:')
+                console.log(this.state.vis_arr)
+                console.log('image_arr is:')
+                console.log(this.state.image_arr)
+            });
+    }
+
     row(Images,counter){
         var column = [];
         var num = 5;
@@ -194,6 +226,10 @@ export default class ImageContainer extends React.Component {
                     <div className="border border-success col">
                         <PositiveContainer posImageIdFromParent={this.state.pos_arr} /*callBackFromParent={this.myCallBack.bind(this)}*//>
                     </div>
+                </div>
+                <div className="reset-room">
+                    <ResetButton resetOnClickFromBtn={this.resetOnClick.bind(this)}/>
+                    <NewStartButton startOverOnClickFromBtn={this.startOverOnClick.bind(this)}/>
                 </div>
             </div>
         );

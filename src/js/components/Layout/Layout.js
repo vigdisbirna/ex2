@@ -5,6 +5,7 @@ import Footer from "./Footer";
 import Image from "../Image/Image";
 import ImageContainer from "../Container/ImageContainer"
 
+
 export default class Layout extends React.Component {
 
     constructor() {
@@ -31,7 +32,6 @@ export default class Layout extends React.Component {
          });
 
         return (
-        
             <div className="container"> 
                 <Header changeTitle={this.changeTitle.bind(this)} title={this.state.title} />  
                 <ImageContainer />
