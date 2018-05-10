@@ -19,14 +19,14 @@ export default class ImageContainer extends React.Component {
 
     constructor(props) {
         super(props);
-        this.state = {image_arr: [], vis_arr: [],  pos_arr: [], neg_arr: [], interval: null, pos_cnt: 0, neg_cnt: 0};
-        //this.state = {image_arr: Array.from(Array(50).keys()), vis_arr: Array.from(Array(50).keys()),  pos_arr: [], neg_arr: [], interval: null, pos_cnt: 0, neg_cnt: 0};
+        //this.state = {image_arr: [], vis_arr: [],  pos_arr: [], neg_arr: [], interval: null, pos_cnt: 0, neg_cnt: 0};
+        this.state = {image_arr: Array.from(Array(50).keys()), vis_arr: Array.from(Array(50).keys()),  pos_arr: [], neg_arr: [], interval: null, pos_cnt: 0, neg_cnt: 0};
     }
 
     componentDidMount() {
-        this.initialize();        
+       /* this.initialize();        
         var intv = setInterval(this.loadData.bind(this), 40000);
-        this.setState({interval: intv});
+        this.setState({interval: intv});*/
     }
 
     componentWillUnmount() {
@@ -51,7 +51,10 @@ export default class ImageContainer extends React.Component {
         height: "80%",
         width: "80%",
         overflow: 'auto',
-        overflowX: 'hidden'
+        overflowX: 'hidden',
+        padding: "1% 0% 0% 1%",
+        backgroundColor: "black",
+        borderColor: "#28a746"
     };
 
     //const container = document.querySelector('#container-scroll');
@@ -77,7 +80,11 @@ popup_negative() {
         height: "80%",
         width: "80%",
         overflow: 'auto',
-        overflowX: 'hidden'
+        overflowX: 'hidden',
+        padding: "1% 0% 0% 1%",
+        backgroundColor: "black",
+        borderColor: "#a50010"
+        
     };
 
     //const container = document.querySelector('#container-scroll');
@@ -294,7 +301,7 @@ popup_negative() {
         return (      
             <div className="container-fluid">
                 <div className="row">
-                    <div className="border border-danger col">
+                    <div className="border-extra col">
                         <NegativeContainer negImageIdFromParent={this.state.neg_arr}/>
                     </div>
                     <div className="col-md-auto">

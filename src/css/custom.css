@@ -8,18 +8,23 @@ body {
 
 div.border-success {
     background-color: #28a74670;
+    
 }
 
 div.border-success h5 {
     color: #28a746;
 }
 
-div.border-danger {
-    background-color: #dc354662;
+.border-extra {
+    border: 1px solid;
+    background-color: #a500107c;
+    border-color: #a50010;
 }
 
-div.border-danger h5{
-    color: #dc3546;
+.btn-danger {
+  border-color: #a50010;
+  Background-color: #a50010;
+
 }
 
 img.selected {
@@ -53,13 +58,15 @@ button.reset {
 div.posAllCont {
     display:flex;
     justify-content:flex-end;
-    margin-right:36px;
+    margin-right:4%;
+    margin-top:1%;
 }
 
 div.negAllCont {
     display:flex;
     justify-content:flex-start;
-    margin-left:36px;
+    margin-left:4%;
+    margin-top:1%;
 }
 
 button.posAll {
@@ -117,11 +124,13 @@ card
     overflow: scroll;
   }*/
 
-  
-
+.popup-content {
+  padding-left: 2%;
+  padding-top: 1%;
+}
 .container-data {
   display: flex;
-  height: 200px; // optional or max-height: 200px;
+  height: 200px; 
 }
 
 .card {
