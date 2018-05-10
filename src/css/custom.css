@@ -1,6 +1,7 @@
 h1 {
     color: #ffdd00;
 }
+
 body {
     background-color: black;
 }
@@ -52,7 +53,13 @@ button.reset {
 div.posAllCont {
     display:flex;
     justify-content:flex-end;
-    margin-right:36px; 
+    margin-right:36px;
+}
+
+div.negAllCont {
+    display:flex;
+    justify-content:flex-start;
+    margin-left:36px;
 }
 
 button.posAll {
@@ -61,6 +68,7 @@ button.posAll {
 }
 
 .example-warper {
+  overflow: scroll;
   width: 100%;
   padding: 20px 5%;
   display: flex;
@@ -98,10 +106,17 @@ button.posAll {
 card 
 */
 
+/*
 #container-scroll {
-    /*position: relative;*/
-    overflow: hidden;
-  }
+    width: 80%;
+    margin: auto;
+    padding: 5px;
+    max-width: 710px;
+    max-height: 710px;
+    height: 80%;
+    overflow: scroll;
+  }*/
+
   
 
 .container-data {

@@ -6,8 +6,9 @@ import Image from "../Image/Image";
 import PositiveContainer from "./PositiveContainer";
 import NegativeContainer from "./NegativeContainer";
 import ResetButton from "../Buttons/ResetButton";
-import NewStartButton from "../Buttons/NewStartButton"
-import ShowPositive from "../Buttons/ShowPositive"
+import NewStartButton from "../Buttons/NewStartButton";
+import ShowPositive from "../Buttons/ShowPositive";
+import ShowNegative from "../Buttons/ShowNegative";
 import Popup from "reactjs-popup";
 import scrollArea from "react-scrollbar";
 import 'react-perfect-scrollbar/dist/css/styles.css'
@@ -18,15 +19,14 @@ export default class ImageContainer extends React.Component {
 
     constructor(props) {
         super(props);
-       //this.state = {image_arr: [], vis_arr: [],  pos_arr: [], neg_arr: [], interval: null, pos_cnt: 0, neg_cnt: 0};
-        this.state = {image_arr: Array.from(Array(50).keys()), vis_arr: Array.from(Array(50).keys()),  pos_arr: [], neg_arr: [], interval: null, pos_cnt: 0, neg_cnt: 0};
+        this.state = {image_arr: [], vis_arr: [],  pos_arr: [], neg_arr: [], interval: null, pos_cnt: 0, neg_cnt: 0};
+        //this.state = {image_arr: Array.from(Array(50).keys()), vis_arr: Array.from(Array(50).keys()),  pos_arr: [], neg_arr: [], interval: null, pos_cnt: 0, neg_cnt: 0};
     }
 
-
     componentDidMount() {
-       /* this.initialize();        
+        this.initialize();        
         var intv = setInterval(this.loadData.bind(this), 40000);
-        this.setState({interval: intv});*/
+        this.setState({interval: intv});
     }
 
     componentWillUnmount() {
@@ -35,15 +35,43 @@ export default class ImageContainer extends React.Component {
     }
 
     startOverOnClick() {
+        console.log('in start over');
         this.setState({
             pos_arr: [], 
             neg_arr: []
         });
-
         this.initialize();
     }
 
-    popup() {
+    popup_positive() {
+
+    var contentStyle = {
+        maxWidth: "710px",
+        maxHeight: "710px",
+        height: "80%",
+        width: "80%",
+        overflow: 'auto',
+        overflowX: 'hidden'
+    };
+
+    //const container = document.querySelector('#container-scroll');
+    //const ps = new PerfectScrollbar(container);
+
+    const Images = this.state.pos_arr.map((id, i) =>
+    <Image key={i} id={id} imageId={id}/>);
+
+    var rows = Math.ceil(Images.length / 5);
+    console.log('rows:');
+    console.log(rows);
+    return(
+        <Popup trigger={<button className='btn btn-success posAll'>Show all</button>} modal closeOnDocumentClick contentStyle={contentStyle}>
+            {this.grid(Images,rows)}           
+        </Popup>
+    
+    );
+    };
+
+popup_negative() {
 
     var contentStyle = {
         maxWidth: "710px",
@@ -58,13 +86,11 @@ export default class ImageContainer extends React.Component {
     //const ps = new PerfectScrollbar(container);
 
 
-    const Images = this.state.pos_arr.map((id, i) =>
-    <Image key={i} id={id} imageId={id} changeOnClickPosFromContainer={this.changeOnClickPos.bind(this, id, i)} changeOnClickNegFromContainer={this.changeOnClickNeg.bind(this, id, i)} changeOnClickSkipFromContainer={this.changeOnClickSkip.bind(this,id,i)}/>
+    const Images = this.state.neg_arr.map((id, i) =>
+    <Image key={i} id={id} imageId={id} changeOnClickNegFromContainer={this.changeOnClickPos.bind(this, id, i)} changeOnClickNegFromContainer={this.changeOnClickNeg.bind(this, id, i)} changeOnClickSkipFromContainer={this.changeOnClickSkip.bind(this,id,i)}/>
         );
-
-
         return(
-            <Popup trigger={<button className='btn btn-success posAll'>Show all</button>} modal closeOnDocumentClick contentStyle={contentStyle}>
+            <Popup trigger={<button className='btn btn-danger posAll'>Show all</button>} modal closeOnDocumentClick contentStyle={contentStyle}>
          
                     <div id="container-scroll" className="content">
                    
@@ -76,7 +102,6 @@ export default class ImageContainer extends React.Component {
         
         );
     };
-
     initialize() {
         console.log('sending Get !')
         axios({
@@ -251,15 +276,14 @@ export default class ImageContainer extends React.Component {
          return column;
     }
 
-    grid(Images){
+    grid(Images, num){
         var rows = [];
         var counter = 0;
-        var num = 5;
         for (var j = 0; j < num; j++) {
            rows.push( <div key = {counter} className="row">
                 {this.row(Images, counter)}
             </div>);
-            counter = counter + num;
+            counter = counter + 5;
         }
         return rows;
     }
@@ -281,19 +305,20 @@ export default class ImageContainer extends React.Component {
                         <NegativeContainer negImageIdFromParent={this.state.neg_arr}/>
                     </div>
                     <div className="col-md-auto">
-                        {this.grid(Images)}
+                        {this.grid(Images,5)}
                     </div>
                     <div className="border border-success col">
                         <PositiveContainer posImageIdFromParent={this.state.pos_arr} /*callBackFromParent={this.myCallBack.bind(this)}*//>
                     </div>
                 </div>
                 <div className='row'>
-                    <div className='col'>
+                    <div className='col negAllCont'>
+                        {this.popup_negative()}
                     </div>
                     <div className='col'>
                     </div>
                     <div className='col posAllCont'>
-                        {this.popup()}
+                        {this.popup_positive()}
                     </div>
                 </div>
                 <div className="reset-room">
