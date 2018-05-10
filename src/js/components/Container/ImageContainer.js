@@ -61,8 +61,6 @@ export default class ImageContainer extends React.Component {
     <Image key={i} id={id} imageId={id}/>);
 
     var rows = Math.ceil(Images.length / 5);
-    console.log('rows:');
-    console.log(rows);
     return(
         <Popup trigger={<button className='btn btn-success posAll'>Show all</button>} modal closeOnDocumentClick contentStyle={contentStyle}>
             {this.grid(Images,rows)}           
@@ -78,26 +76,21 @@ popup_negative() {
         maxHeight: "710px",
         height: "80%",
         width: "80%",
-        
+        overflow: 'auto',
+        overflowX: 'hidden'
     };
 
     //const container = document.querySelector('#container-scroll');
 
     //const ps = new PerfectScrollbar(container);
 
-
     const Images = this.state.neg_arr.map((id, i) =>
-    <Image key={i} id={id} imageId={id} changeOnClickNegFromContainer={this.changeOnClickPos.bind(this, id, i)} changeOnClickNegFromContainer={this.changeOnClickNeg.bind(this, id, i)} changeOnClickSkipFromContainer={this.changeOnClickSkip.bind(this,id,i)}/>
-        );
+    <Image key={i} id={id} imageId={id}/>);
+
+    var rows = Math.ceil(Images.length / 5);
         return(
             <Popup trigger={<button className='btn btn-danger posAll'>Show all</button>} modal closeOnDocumentClick contentStyle={contentStyle}>
-         
-                    <div id="container-scroll" className="content">
-                   
-                            {this.grid(Images)}
-                       
-                    </div>
-               
+                {this.grid(Images,rows)}
             </Popup>
         
         );
