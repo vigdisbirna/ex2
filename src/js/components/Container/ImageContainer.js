@@ -25,7 +25,7 @@ export default class ImageContainer extends React.Component {
 
     componentDidMount() {
         this.initialize();        
-        var intv = setInterval(this.loadData.bind(this), 40000);
+        var intv = setInterval(this.loadData.bind(this), 10000);
         this.setState({interval: intv});
     }
 
@@ -132,7 +132,7 @@ popup_negative() {
         console.log("neg_arr in loadData is:");
         console.log(this.state.neg_arr);*/
 
-        if(this.state.pos_cnt != 0 && this.state.neg_cnt != 0) {
+        if(this.state.pos_cnt != 0 || this.state.neg_cnt != 0) {
             var pos_send = [];
             var neg_send = [];
             var i = 0;

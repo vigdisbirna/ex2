@@ -10,7 +10,6 @@ export default class Header extends React.Component {
     }
 
     render () {
-    
         return (
             <div className="header-room">
                 <Title title={this.props.title}/>  
