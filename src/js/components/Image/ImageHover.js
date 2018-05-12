@@ -9,7 +9,7 @@ export default class ImageHover extends React.Component {
     }
 
     componentDidMount() {
-
+        this.setState({ source: "/src/assets/black.jpg"});
         axios
         .get(
             'http://192.168.1.100/~ThorhildurThorleiksdottir/images/placing-test-thumbnails/' + this.props.imageId.toString() + '.jpg',
