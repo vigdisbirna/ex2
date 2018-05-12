@@ -8,6 +8,7 @@ export default class Image extends React.Component {
     }
 
     componentDidMount() {
+
         axios
         .get(
             //'http://localhost/~ThorhildurThorleiksdottir/foo/' + this.props.imageId.toString() + '.jpg',
