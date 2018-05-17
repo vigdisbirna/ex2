@@ -9,6 +9,9 @@ import ResetButton from "../Buttons/ResetButton";
 import NewStartButton from "../Buttons/NewStartButton";
 import ShowPositive from "../Buttons/ShowPositive";
 import ShowNegative from "../Buttons/ShowNegative";
+import ResetRandomButton from "../Buttons/ResetRandomButton.js";
+import UpdateRandomButton from "../Buttons/UpdateRandomButton.js";
+import FinishButton from "../Buttons/FinishButton.js";
 import Popup from "reactjs-popup";
 import scrollArea from "react-scrollbar";
 import 'react-perfect-scrollbar/dist/css/styles.css'
@@ -19,14 +22,14 @@ export default class ImageContainer extends React.Component {
 
     constructor(props) {
         super(props);
-        this.state = {image_arr: [], vis_arr: [],  pos_arr: [], neg_arr: [], interval: null, pos_cnt: 0, neg_cnt: 0};
-        //this.state = {image_arr: Array.from(Array(50).keys()), vis_arr: Array.from(Array(50).keys()),  pos_arr: [], neg_arr: [], interval: null, pos_cnt: 0, neg_cnt: 0};
+        //this.state = {image_arr: [], vis_arr: [],  pos_arr: [], neg_arr: [], interval: null, pos_cnt: 0, neg_cnt: 0};
+        this.state = {image_arr: Array.from(Array(50).keys()), vis_arr: Array.from(Array(50).keys()),  pos_arr: [], neg_arr: [], interval: null, pos_cnt: 0, neg_cnt: 0};
     }
 
     componentDidMount() {
-        this.initialize();        
+       /* this.initialize();        
         var intv = setInterval(this.loadData.bind(this), 40000);
-        this.setState({interval: intv});
+        this.setState({interval: intv});*/
     }
 
     componentWillUnmount() {
@@ -106,7 +109,7 @@ popup_negative() {
         console.log('sending Get !')
         axios({
             method: 'get',
-            url: 'http://192.168.1.126:5001/learn',
+            url: 'http://192.168.1.128:5001/learn',
             headers: {
             'Content-Type': 'application/json'
             }}).then(res => {
@@ -162,7 +165,7 @@ popup_negative() {
             console.log(neg_send);
             axios({
                 method: 'post',
-                url: 'http://192.168.1.126:5001/learn',
+                url: 'http://192.168.1.128:5001/learn',
                 data: {"pos": pos_send, "neg": neg_send},
                 //data: {"pos":[205184, 1434920, 628770, 996981, 1498999], "neg":[1204751, 652837, 126553, 444500, 562808, 289004, 1304436, 1267878, 779381, 373122, 344467, 112635, 1195480, 919759, 1097026, 1405437, 1082330, 206936, 419696, 385295, 1071078, 834200, 630266, 826533, 337513, 226962, 549076, 1091162, 514520, 194552, 378336, 689210, 956037, 506132, 598172, 438651, 932860, 273433, 432193, 1120997, 504388, 198492, 978275, 998146, 1369446, 1231115, 863451, 1414852, 1266696, 957149, 766538, 1497839, 352509, 946142, 873132, 183645, 1325906, 676795, 819663, 1124820, 423116, 117691, 1428357, 524561, 940900, 1188178, 1113839, 811448, 445473, 61979, 1161657, 835207, 114952, 1049130, 1191258, 336337, 838882, 1202972, 923655, 539574, 358863, 525807, 1277982, 849936, 53155, 1101368, 154084, 1369843, 485161, 272079, 354267, 343382, 453196, 239875, 6151, 911754, 335043, 236151, 1210440, 334363]},
                 headers: {
@@ -227,7 +230,7 @@ popup_negative() {
         console.log('resetting');
         axios({
             method: 'get',
-            url: 'http://192.168.1.126:5001/reset',
+            url: 'http://192.168.1.128:5001/reset',
             headers: {
             'Content-Type': 'application/json'
             }}).then(res => {
@@ -243,6 +246,21 @@ popup_negative() {
                 console.log(this.state.image_arr)
             });
     }
+
+
+    startRandomOnClickFromBtn(){
+
+    }
+
+
+    updateRandomOnClickFromBtn(){
+
+    }
+
+    FinishOnClickFromBtn() {
+
+    }
+
 
     changeOnClickSkip(img_id,i) {
         //console.log(img);
@@ -301,13 +319,13 @@ popup_negative() {
         return (      
             <div className="container-fluid">
                 <div className="row">
-                    <div className="border-extra col">
+                    <div className="border-extra-neg col">
                         <NegativeContainer negImageIdFromParent={this.state.neg_arr}/>
                     </div>
                     <div className="col-md-auto">
                         {this.grid(Images,5)}
                     </div>
-                    <div className="border border-success col">
+                    <div className="border-extra-pos border-success col">
                         <PositiveContainer posImageIdFromParent={this.state.pos_arr} /*callBackFromParent={this.myCallBack.bind(this)}*//>
                     </div>
                 </div>
@@ -315,19 +333,25 @@ popup_negative() {
                     <div className='col negAllCont'>
                         {this.popup_negative()}
                     </div>
-                    <div className='col'>
+                    <div className='col d-flex reset-room'>
+                        <div className='p-2 button-p-2'>
+                            <ResetButton resetOnClickFromBtn={this.resetOnClick.bind(this)}/>
+                        </div>
+                        <div className='p-2 button-p-2'>
+                            <UpdateRandomButton updateRandomOnClickFromBtn={this.resetOnClick.bind(this)}/>
+                        </div>
+                        <div className='p-2 button-p-2'>
+                            <NewStartButton startOverOnClickFromBtn={this.startOverOnClick.bind(this)}/>
+                        </div>
+                        <div className='p-2 button-p-2'>
+                            <ResetRandomButton resetRandomOnClickFromBtn={this.resetOnClick.bind(this)}/>
+                        </div>
                     </div>
                     <div className='col posAllCont'>
                         {this.popup_positive()}
                     </div>
                 </div>
-                <div className="reset-room">
-                    <ResetButton resetOnClickFromBtn={this.resetOnClick.bind(this)}/>
-                    <NewStartButton startOverOnClickFromBtn={this.startOverOnClick.bind(this)}/>
-                </div>
-
-            </div>
-            
+            </div>     
         );
     }
 }

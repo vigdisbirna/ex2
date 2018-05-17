@@ -13,11 +13,11 @@ export default class Header extends React.Component {
     
         return (
             <div className="header-room">
-                <Title title={this.props.title}/>  
+                <Title title={this.props.title}/> 
+                <h4 className="d-flex justify-content-center">
+                    Explore YFCC100m on 100 million images.
+                </h4> 
            </div>  
         );
     }
 }
-
-
-//<input value={this.props.title} onChange={this.handleChange.bind(this)} />
