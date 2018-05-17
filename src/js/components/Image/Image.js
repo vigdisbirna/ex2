@@ -12,7 +12,7 @@ export default class Image extends React.Component {
         axios
         .get(
             //'http://localhost/~ThorhildurThorleiksdottir/foo/' + this.props.imageId.toString() + '.jpg',
-            'http://192.168.1.100/~ThorhildurThorleiksdottir/images/placing-test-thumbnails/' + this.props.imageId.toString() + '.jpg',
+            'http://192.168.1.149/~ThorhildurThorleiksdottir/images/placing-test-thumbnails/' + this.props.imageId.toString() + '.jpg',
             { responseType: 'arraybuffer' },
           )
           .then(response => {
@@ -39,7 +39,7 @@ export default class Image extends React.Component {
         axios
         .get(
             //'http://localhost/~ThorhildurThorleiksdottir/foo/' + this.props.imageId.toString() + '.jpg',
-            'http://192.168.1.100/~ThorhildurThorleiksdottir/images/placing-test-thumbnails/' + this.props.imageId.toString() + '.jpg',
+            'http://192.168.1.149/~ThorhildurThorleiksdottir/images/placing-test-thumbnails/' + this.props.imageId.toString() + '.jpg',
             { responseType: 'arraybuffer' },
           )
           .then(response => {
@@ -56,7 +56,7 @@ export default class Image extends React.Component {
               console.log(error.response.status);
               console.log(error.response.headers);
               
-              this.setState({ source: "/src/assets/notFound.jpg"});
+              //this.setState({ source: "/src/assets/notFound.jpg"});
           });
         }
       }
