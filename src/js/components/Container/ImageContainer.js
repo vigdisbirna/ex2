@@ -9,6 +9,9 @@ import ResetButton from "../Buttons/ResetButton";
 import NewStartButton from "../Buttons/NewStartButton";
 import ShowPositive from "../Buttons/ShowPositive";
 import ShowNegative from "../Buttons/ShowNegative";
+import ResetRandomButton from "../Buttons/ResetRandomButton.js";
+import UpdateRandomButton from "../Buttons/UpdateRandomButton.js";
+import FinishButton from "../Buttons/FinishButton.js";
 import Popup from "reactjs-popup";
 import scrollArea from "react-scrollbar";
 import 'react-perfect-scrollbar/dist/css/styles.css'
@@ -139,12 +142,6 @@ popup_negative() {
     loadData() {
         console.log('About to send post !');
 
-        /*console.log("pos_arr in loadData is:");
-        console.log(this.state.pos_arr);
-
-        console.log("neg_arr in loadData is:");
-        console.log(this.state.neg_arr);*/
-
         if(this.state.pos_cnt != 0 || this.state.neg_cnt != 0) {
             var pos_send = [];
             var neg_send = [];
@@ -229,7 +226,7 @@ popup_negative() {
        // setTimeout(console.log(this.state.vis_arr), 3000);
     }
 
-    resetOnClick() {
+    updateThemeOnClickFromBtn() {
         console.log('resetting');
         axios({
             method: 'get',
@@ -249,6 +246,48 @@ popup_negative() {
                 console.log(this.state.image_arr)
             });
     }
+
+
+    resetRandomOnClickFromBtn(){
+        console.log('sending Get !')
+        var arr = []
+        while(arr.length < 50){
+            var randomnumber = Math.floor(Math.random()*1500000) + 1;
+            if(arr.indexOf(randomnumber) > -1) continue;
+            arr[arr.length] = randomnumber;
+        }
+        axios({
+            method: 'get',
+            url: 'http://192.168.1.128:5001/resetModel',
+            headers: {
+            'Content-Type': 'application/json'
+            }}).then(res => {
+                var tmp = arr;
+                this.setState({
+                    image_arr: arr.slice(-25), 
+                    vis_arr: tmp.slice(0,25)
+                });
+            });
+    }
+
+    updateRandomOnClickFromBtn(){
+        var arr = []
+        while(arr.length < 50){
+            var randomnumber = Math.floor(Math.random()*1500000) + 1;
+            if(arr.indexOf(randomnumber) > -1) continue;
+            arr[arr.length] = randomnumber;
+        }
+        var tmp = arr;
+        this.setState({
+            image_arr: arr.slice(-25), 
+            vis_arr: tmp.slice(0,25)
+        });
+    }
+
+    FinishOnClickFromBtn() {
+
+    }
+
 
     changeOnClickSkip(img_id,i) {
         //console.log(img);
@@ -307,13 +346,13 @@ popup_negative() {
         return (      
             <div className="container-fluid">
                 <div className="row">
-                    <div className="border-extra col">
+                    <div className="border-extra-neg col">
                         <NegativeContainer negImageIdFromParent={this.state.neg_arr}/>
                     </div>
                     <div className="col-md-auto">
                         {this.grid(Images,5)}
                     </div>
-                    <div className="border border-success col">
+                    <div className="border-extra-pos border-success col">
                         <PositiveContainer posImageIdFromParent={this.state.pos_arr} /*callBackFromParent={this.myCallBack.bind(this)}*//>
                     </div>
                 </div>
@@ -321,19 +360,25 @@ popup_negative() {
                     <div className='col negAllCont'>
                         {this.popup_negative()}
                     </div>
-                    <div className='col'>
+                    <div className='col d-flex reset-room'>
+                        <div className='p-2 button-p-2'>
+                            <ResetButton resetOnClickFromBtn={this.resetOnClick.bind(this)}/>
+                        </div>
+                        <div className='p-2 button-p-2'>
+                            <UpdateRandomButton updateRandomOnClickFromBtn={this.resetOnClick.bind(this)}/>
+                        </div>
+                        <div className='p-2 button-p-2'>
+                            <NewStartButton startOverOnClickFromBtn={this.startOverOnClick.bind(this)}/>
+                        </div>
+                        <div className='p-2 button-p-2'>
+                            <ResetRandomButton resetRandomOnClickFromBtn={this.resetOnClick.bind(this)}/>
+                        </div>
                     </div>
                     <div className='col posAllCont'>
                         {this.popup_positive()}
                     </div>
                 </div>
-                <div className="reset-room">
-                    <ResetButton resetOnClickFromBtn={this.resetOnClick.bind(this)}/>
-                    <NewStartButton startOverOnClickFromBtn={this.startOverOnClick.bind(this)}/>
-                </div>
-
-            </div>
-            
+            </div>     
         );
     }
 }

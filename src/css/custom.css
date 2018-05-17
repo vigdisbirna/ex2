@@ -1,9 +1,19 @@
 h1 {
     color: #ffdd00;
+    
+}
+
+.button-p-2 {
+  padding: 0%;
+}
+
+h4 {
+  color: #ffdd00;
 }
 
 body {
     background-color: black;
+    font-family: 'Roboto', sans-serif;
 }
 
 div.border-success {
@@ -12,11 +22,18 @@ div.border-success {
 }
 
 div.border-success h5 {
+    border: 3px solid;
     color: #28a746;
 }
 
-.border-extra {
-    border: 1px solid;
+.border-extra-pos {
+  border: 3px solid;
+  background-color: #28a74670;
+  border-color: #28a746;;
+}
+
+.border-extra-neg {
+    border: 3px solid;
     background-color: #a500107c;
     border-color: #a50010;
 }
@@ -38,12 +55,12 @@ p.love {
 }
 
 div.header-room {
-    margin-bottom: 1%;
-    margin-top:1%;
+    margin-bottom: 3%;
+    margin-top:2%;
 }
 
 div.reset-room {
-    display:flex;
+    margin-top:1%;
     justify-content:center;
 }
 
@@ -58,15 +75,19 @@ button.reset {
 div.posAllCont {
     display:flex;
     justify-content:flex-end;
-    margin-right:4%;
+    margin-right:3%;
     margin-top:1%;
+    padding-top:.5rem;
+    padding-bottom:.5rem;
 }
 
 div.negAllCont {
     display:flex;
     justify-content:flex-start;
-    margin-left:4%;
+    margin-left:3%;
     margin-top:1%;
+    padding-top:.5rem;
+    padding-bottom:.5rem;
 }
 
 button.posAll {
@@ -109,21 +130,11 @@ button.posAll {
 .button.hover {
   border-color: #2980b9;
 }
-/*
-card 
-*/
 
-/*
-#container-scroll {
-    width: 80%;
-    margin: auto;
-    padding: 5px;
-    max-width: 710px;
-    max-height: 710px;
-    height: 80%;
-    overflow: scroll;
-  }*/
-
+.col-md-auto {
+  margin-left: 2%;
+  margin-right: 2%;
+}
 .popup-content {
   padding-left: 2%;
   padding-top: 1%;
