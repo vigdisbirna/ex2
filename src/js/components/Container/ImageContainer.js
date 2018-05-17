@@ -5,13 +5,12 @@ import ImageHover from "../Image/ImageHover";
 import Image from "../Image/Image";
 import PositiveContainer from "./PositiveContainer";
 import NegativeContainer from "./NegativeContainer";
-import ResetButton from "../Buttons/ResetButton";
-import NewStartButton from "../Buttons/NewStartButton";
+import UpdateThemeButton from "../Buttons/UpdateThemeButton";
+import ResetThemeButton from "../Buttons/ResetThemeButton";
 import ShowPositive from "../Buttons/ShowPositive";
 import ShowNegative from "../Buttons/ShowNegative";
 import ResetRandomButton from "../Buttons/ResetRandomButton.js";
 import UpdateRandomButton from "../Buttons/UpdateRandomButton.js";
-import FinishButton from "../Buttons/FinishButton.js";
 import Popup from "reactjs-popup";
 import scrollArea from "react-scrollbar";
 import 'react-perfect-scrollbar/dist/css/styles.css'
@@ -34,15 +33,6 @@ export default class ImageContainer extends React.Component {
     componentWillUnmount() {
         print('yo:componentWillUnmount');
         clearInterval(this.state.interval);
-    }
-
-    startOverOnClick() {
-        console.log('in start over');
-        this.setState({
-            pos_arr: [], 
-            neg_arr: []
-        });
-        this.initialize();
     }
 
     popup_positive() {
@@ -226,11 +216,25 @@ popup_negative() {
        // setTimeout(console.log(this.state.vis_arr), 3000);
     }
 
-    updateThemeOnClickFromBtn() {
-        console.log('resetting');
+
+    updateRandomOnClick(){
+        var arr = []
+        while(arr.length < 50){
+            var randomnumber = Math.floor(Math.random()*1500000) + 1;
+            if(arr.indexOf(randomnumber) > -1) continue;
+            arr[arr.length] = randomnumber;
+        }
+        var tmp = arr;
+        this.setState({
+            image_arr: arr.slice(-25), 
+            vis_arr: tmp.slice(0,25)
+        });
+    }
+
+    updateThemeOnClick() {
         axios({
             method: 'get',
-            url: 'http://192.168.1.128:5001/reset',
+            url: 'http://192.168.1.128:5001/updateTheme',
             headers: {
             'Content-Type': 'application/json'
             }}).then(res => {
@@ -247,9 +251,7 @@ popup_negative() {
             });
     }
 
-
-    resetRandomOnClickFromBtn(){
-        console.log('sending Get !')
+    resetRandomOnClick(){
         var arr = []
         while(arr.length < 50){
             var randomnumber = Math.floor(Math.random()*1500000) + 1;
@@ -264,30 +266,31 @@ popup_negative() {
             }}).then(res => {
                 var tmp = arr;
                 this.setState({
+                    pos_arr: [], 
+                    neg_arr: [],
                     image_arr: arr.slice(-25), 
                     vis_arr: tmp.slice(0,25)
                 });
             });
     }
 
-    updateRandomOnClickFromBtn(){
-        var arr = []
-        while(arr.length < 50){
-            var randomnumber = Math.floor(Math.random()*1500000) + 1;
-            if(arr.indexOf(randomnumber) > -1) continue;
-            arr[arr.length] = randomnumber;
-        }
-        var tmp = arr;
-        this.setState({
-            image_arr: arr.slice(-25), 
-            vis_arr: tmp.slice(0,25)
-        });
+    resetThemeOnClick() {
+        axios({
+            method: 'get',
+            url: 'http://192.168.1.128:5001/resetTheme',
+            headers: {
+            'Content-Type': 'application/json'
+            }}).then(res => {
+                console.log(res);
+                var tmp = res.data;
+                this.setState({
+                    pos_arr: [], 
+                    neg_arr: [],
+                    image_arr: res.data.slice(-25), 
+                    vis_arr: tmp.slice(0,25)
+                });
+            });
     }
-
-    FinishOnClickFromBtn() {
-
-    }
-
 
     changeOnClickSkip(img_id,i) {
         //console.log(img);
@@ -362,16 +365,16 @@ popup_negative() {
                     </div>
                     <div className='col d-flex reset-room'>
                         <div className='p-2 button-p-2'>
-                            <ResetButton resetOnClickFromBtn={this.resetOnClick.bind(this)}/>
+                            <UpdateThemeButton updateThemeOnClickFromBtn={this.updateThemeOnClick.bind(this)}/>
                         </div>
                         <div className='p-2 button-p-2'>
-                            <UpdateRandomButton updateRandomOnClickFromBtn={this.resetOnClick.bind(this)}/>
+                            <UpdateRandomButton updateRandomOnClickFromBtn={this.updateRandomOnClick.bind(this)}/>
                         </div>
                         <div className='p-2 button-p-2'>
-                            <NewStartButton startOverOnClickFromBtn={this.startOverOnClick.bind(this)}/>
+                            <ResetThemeButton resetThemeOnClickFromBtn={this.resetThemeOnClick.bind(this)}/>
                         </div>
                         <div className='p-2 button-p-2'>
-                            <ResetRandomButton resetRandomOnClickFromBtn={this.resetOnClick.bind(this)}/>
+                            <ResetRandomButton resetRandomOnClickFromBtn={this.resetRandomOnClick.bind(this)}/>
                         </div>
                     </div>
                     <div className='col posAllCont'>
