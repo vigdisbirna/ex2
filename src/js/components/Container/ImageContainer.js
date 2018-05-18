@@ -20,13 +20,13 @@ import PerfectScrollbar from 'react-perfect-scrollbar';
 export default class ImageContainer extends React.Component {
     constructor(props) {
         super(props);
-        this.state = {image_arr: [], vis_arr: [],  pos_arr: [], neg_arr: [], interval: null, pos_cnt: 0, neg_cnt: 0};
+        this.state = {image_arr: [], vis_arr: [],  pos_arr: [], neg_arr: [], interval: null, pos_cnt: 0, neg_cnt: 0, loading: false, round: 0};
         //this.state = {image_arr: Array.from(Array(50).keys()), vis_arr: Array.from(Array(50).keys()),  pos_arr: [], neg_arr: [], interval: null, pos_cnt: 0, neg_cnt: 0};
     }
 
     componentDidMount() {
         this.initialize();        
-        var intv = setInterval(this.loadData.bind(this), 10000);
+        var intv = setInterval(this.loadData.bind(this), 5000);
         this.setState({interval: intv});
     }
 
@@ -131,8 +131,11 @@ popup_negative() {
 
     loadData() {
         console.log('About to send post !');
+        
 
         if(this.state.pos_cnt != 0 || this.state.neg_cnt != 0) {
+            var temp = this.state.round;
+            this.setState({loading: true});
             var pos_send = [];
             var neg_send = [];
             var i = 0;
@@ -161,7 +164,7 @@ popup_negative() {
                 headers: {
                 'Content-Type': 'application/json',
                 }}).then(res => {
-                    this.setState({image_arr: res.data, pos_cnt: 0, neg_cnt: 0});
+                    this.setState({image_arr: res.data, pos_cnt: 0, neg_cnt: 0, loading: false, round: temp + 1});
                     console.log(res);
                     console.log('image arr is:');
                     console.log(this.state.image_arr);
@@ -338,16 +341,28 @@ popup_negative() {
 
     render() {
 
+        let data;
         const Images = this.state.vis_arr.map((id, i) =>
             <ImageHover key={i} id={id} imageId={id} changeOnClickPosFromContainer={this.changeOnClickPos.bind(this, id, i)} changeOnClickNegFromContainer={this.changeOnClickNeg.bind(this, id, i)} changeOnClickSkipFromContainer={this.changeOnClickSkip.bind(this,id,i)}/>
         );
+
+        if (this.state.loading) {
+            data = <div className='training'></div>
+        }
+        else {
+            data = <div className='training'>Round {this.state.round.toString()}</div>
+        }
         //const Images = Array.from(Array(50).keys()).map((id, i) => <Image key={i} id={id}/>);
         //console.log("render");
         //console.log(this.state.vis_arr);
         //console.log(Images);
 
-        return (      
+        return (    
+
             <div className="container-fluid">
+               <div className="row">
+                    {data}
+                </div> 
                 <div className="row">
                     <div className="border-extra-neg col">
                         <NegativeContainer negImageIdFromParent={this.state.neg_arr}/>
