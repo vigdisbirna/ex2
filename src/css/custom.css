@@ -18,15 +18,32 @@ body {
 
 .sidebar {
   color: #ffdd00;
-  background-color: #ffdd002d;
+  background-color: #ffdd0020;
   border: 3px solid;
   border-color: #ffdd00; 
   padding: 3%;
-  grid-row-gap: 10px;
+  height: 700px
+}
+
+.show-logo {
+  position: relative;
+}
+
+.sidebar-content-top {
+  font-size: 20px;
+  padding-top:1%;
+  padding-bottom:30%;
 }
 
 div.sidebar-content {
   font-size: 20px;
+  padding-top:1%;
+  padding-bottom:1%;
+}
+
+div.num {
+  display: flex;
+  justify-content: flex-end;
 }
 
 .footer {
@@ -39,8 +56,8 @@ div.sidebar-content {
 }
 
 .footer-container {
-  margin-top: 10%;
-  margin-bottom: 2%;
+  margin-top: 2%;
+  margin-bottom: 1%;
   border-top: 3px;
   border-color: #ffdd00;
 }
@@ -51,14 +68,15 @@ div.sidebar-content {
 } 
 
 .logo {
-  height: 55px;
-  width: 205px;
+  height: 35px;
+  width: 155px;
   margin-top: 5%;
 }
 
 div.border-success {
     background-color: #28a74670;
-    
+    max-height: 700px;
+    overflow: auto;
 }
 
 div.border-success h5 {
@@ -76,16 +94,14 @@ div.border-success h5 {
     border: 3px solid;
     background-color: #a500107c;
     border-color: #a50010;
+    max-height: 700px;
+    overflow: auto;
 }
 
 .btn-danger {
   border-color: #a50010;
   Background-color: #a50010;
 
-}
-
-img.selected {
-    margin: 6.5%;
 }
 
 p.love {
@@ -95,7 +111,7 @@ p.love {
 }
 
 div.header-room {
-    margin-bottom: 3%;
+    margin-bottom: 1%;
     margin-top:2%;
 }
 

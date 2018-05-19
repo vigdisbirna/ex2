@@ -63,7 +63,9 @@ export default class Image extends React.Component {
 
   render() {
     return (
-        <img onClick={this.props.changeOnClickFromContainer} src={this.state.source} alt={this.props.imageId} className="d-flex justify-content-center rounded selected" />
+      <div className="show-image">
+        <img onClick={this.props.changeOnClickFromContainer} src={this.state.source} alt={this.props.imageId} className="d-flex justify-content-center rounded" />
+      </div>
     );
   }
 }

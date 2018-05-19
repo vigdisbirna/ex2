@@ -11,10 +11,13 @@ import ShowPositive from "../Buttons/ShowPositive";
 import ShowNegative from "../Buttons/ShowNegative";
 import ResetRandomButton from "../Buttons/ResetRandomButton.js";
 import UpdateRandomButton from "../Buttons/UpdateRandomButton.js";
+import Header from "../Layout/Header";
 import Popup from "reactjs-popup";
 import scrollArea from "react-scrollbar";
 import 'react-perfect-scrollbar/dist/css/styles.css';
 import PerfectScrollbar from 'react-perfect-scrollbar';
+import LeftSidebar from "../Layout/LeftSidebar";
+import Footer from "../Layout/Footer";
 
 export default class ImageContainer extends React.Component {
     constructor(props) {
@@ -23,19 +26,31 @@ export default class ImageContainer extends React.Component {
         //this.state = {image_arr: [], vis_arr: [],  pos_arr: [], neg_arr: [], interval: null, pos_cnt: 0, neg_cnt: 0, loading: false, round: 0};
        // this.state = {image_arr: Array.from(Array(50).keys()), vis_arr: Array.from(Array(50).keys()),  pos_arr: [], neg_arr: [], interval: null, pos_cnt: 0, neg_cnt: 0, loading: false, round: 0};
 
-        this.state = {time: 0, sum_time: 0, avg_time: 0, image_arr: [], vis_arr: [],  pos_arr: [], neg_arr: [], interval: null, pos_cnt: 0, neg_cnt: 0, loading: false, round: 0};
+        this.state = {time: 0, sum_time: 0, session_timer: 0, 
+                    avg_time: 0, image_arr: [], 
+                    vis_arr: [],  pos_arr: [], neg_arr: [], 
+                    interval: null, pos_cnt: 0, neg_cnt: 0, 
+                    loading: false, round: 0};
 
     }
 
     componentDidMount() {
-        /*this.initialize();        
+        this.initialize();        
         var intv = setInterval(this.loadData.bind(this), 5000);
-        this.setState({interval: intv});*/
+        var sec = setInterval(this.updateTimer.bind(this), 1000);
+        this.setState({interval: intv});
     }
 
     componentWillUnmount() {
         print('yo:componentWillUnmount');
         clearInterval(this.state.interval);
+    }
+
+    updateTimer () {
+        this.setState(prevState => ({
+            session_timer: prevState.session_timer + 1
+        }));
+  
     }
 
     popup_positive() {
@@ -302,6 +317,7 @@ popup_negative() {
                     round: 0,
                     sum_time: 0,
                     avg_time: 0,
+                    session_timer: 0,
                     time: 0
                 });
             });
@@ -322,8 +338,9 @@ popup_negative() {
                     round: 1,
                     image_arr: res.data.sugg.slice(-25), 
                     vis_arr: tmp.slice(0,25),
-                    sum_time: prevState.sum_time + res.data.time,
-                    avg_time: (prevState.sum_time + res.data.time)/1,
+                    sum_time: res.data.time,
+                    avg_time: (res.data.time)/1,
+                    session_timer: 0,
                     time: res.data.time
                 }));
                 console.log(this.state.time)
@@ -394,7 +411,19 @@ popup_negative() {
         //console.log(Images);
 
         return (    
-
+            <div className="container-fluid">
+            <div className="row header-room">
+                <div className="col-2">
+                    <Header/> 
+                </div>
+                <div className="col-8">
+                </div>
+            </div>
+            <div className="row">
+                <div className="col-2">
+                    <LeftSidebar timerFromParent={this.state.session_timer} num_posFromParent={this.state.pos_arr.length} num_negFromParent={this.state.neg_arr.length} roundsFromParent={this.state.round} avg_score_timeFromParent={this.state.avg_time} />
+                </div>
+                <div className="col-8">
             <div className="container">
                 <div className="row">
                     <div className="border-extra-pos border-success col">
@@ -429,13 +458,13 @@ popup_negative() {
                         {this.popup_negative()}
                     </div>
                 </div>
-            </div>     
+            </div>
+            </div>
+                </div>
+                <div className="row footer-container">
+                        <Footer />
+                </div>
+            </div>    
         );
     }
 }
-
-/*ImageContainer.propTypes = {
-    imageUrls: PropTypes.arrayOf(PropTypes.string).isRequired
-};*/
-
-//{this.props.imageUrls.map((imageUrl,i) => this.renderImage(imageUrl, i))}

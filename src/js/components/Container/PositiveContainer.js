@@ -43,10 +43,10 @@ export default class PositiveContainer extends React.Component {
         var list = [];
         var count = 0;
         for (var i = imgs.length-1;  i >= 0; i--) {
-            if (count < 5) {
+            //if (count < 5) {
                 list.push(<div className="d-flex justify-content-center" key={i}> <Image key={i} imageId={imgs[i]}/> </div>);
-                count++;
-            }
+               // count++;
+            //}
             //console.log(this.state.pos[i]);
         }
         return list;
