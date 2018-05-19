@@ -16,6 +16,10 @@ body {
     font-family: 'Roboto', sans-serif;
 }
 
+.sidebar {
+  color: #ffdd00;
+}
+
 div.border-success {
     background-color: #28a74670;
     
@@ -45,7 +49,7 @@ div.border-success h5 {
 }
 
 img.selected {
-    margin: 5.5px;
+    margin: 6.5%;
 }
 
 p.love {
@@ -72,7 +76,7 @@ button.reset {
     margin-right: 1%;
 }
 
-div.posAllCont {
+div.negAllCont {
     display:flex;
     justify-content:flex-end;
     margin-right:3%;
@@ -81,7 +85,7 @@ div.posAllCont {
     padding-bottom:.5rem;
 }
 
-div.negAllCont {
+div.posAllCont {
     display:flex;
     justify-content:flex-start;
     margin-left:3%;
@@ -216,6 +220,10 @@ button.posAll {
 
 .training {
      color: #ffdd00;
+}
+
+.update-b {
+  display: flex;
 }
 
 
