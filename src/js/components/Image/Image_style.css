@@ -20,11 +20,11 @@ div.show-image input {
 }
 div.show-image input.negative {
     bottom:2%;
-    left:2%;
+    right:2%;
 }
 div.show-image input.positive {
     bottom:2%;
-    right:2%;
+    left:2%;
 }
 div.show-image input.skip {
     top:1.5%;

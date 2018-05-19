@@ -21,7 +21,7 @@ export default class ImageContainer extends React.Component {
     constructor(props) {
         super(props);
         this.state = {image_arr: [], vis_arr: [],  pos_arr: [], neg_arr: [], interval: null, pos_cnt: 0, neg_cnt: 0, loading: false, round: 0};
-        //this.state = {image_arr: Array.from(Array(50).keys()), vis_arr: Array.from(Array(50).keys()),  pos_arr: [], neg_arr: [], interval: null, pos_cnt: 0, neg_cnt: 0};
+        //this.state = {image_arr: Array.from(Array(50).keys()), vis_arr: Array.from(Array(50).keys()),  pos_arr: [], neg_arr: [], interval: null, pos_cnt: 0, neg_cnt: 0, loading: false, round: 0};
     }
 
     componentDidMount() {
@@ -131,9 +131,16 @@ popup_negative() {
 
     loadData() {
         console.log('About to send post !');
+
+        console.log("pos counter");
+        console.log(this.state.pos_cnt);
+        console.log("neg counter");
+        console.log(this.state.neg_cnt)
         
 
         if(this.state.pos_cnt != 0 || this.state.neg_cnt != 0) {
+            console.log("enough data wuhu");
+
             var temp = this.state.round;
             this.setState({loading: true});
             var pos_send = [];
@@ -222,6 +229,7 @@ popup_negative() {
 
     updateRandomOnClick(){
         var arr = []
+        var temp = this.state.round;
         while(arr.length < 50){
             var randomnumber = Math.floor(Math.random()*1500000) + 1;
             if(arr.indexOf(randomnumber) > -1) continue;
@@ -230,11 +238,14 @@ popup_negative() {
         var tmp = arr;
         this.setState({
             image_arr: arr.slice(-25), 
-            vis_arr: tmp.slice(0,25)
+            vis_arr: tmp.slice(0,25),
+            round: temp + 1
         });
     }
 
     updateThemeOnClick() {
+
+        var temp = this.state.round;
         axios({
             method: 'get',
             url: 'http://192.168.1.128:5001/updateTheme',
@@ -245,7 +256,8 @@ popup_negative() {
                 var tmp = res.data;
                 this.setState({
                     image_arr: res.data.slice(-25), 
-                    vis_arr: tmp.slice(0,25)
+                    vis_arr: tmp.slice(0,25),
+                    round: temp + 1
                 });
                 console.log('vis_arr is:')
                 console.log(this.state.vis_arr)
@@ -272,7 +284,8 @@ popup_negative() {
                     pos_arr: [], 
                     neg_arr: [],
                     image_arr: arr.slice(-25), 
-                    vis_arr: tmp.slice(0,25)
+                    vis_arr: tmp.slice(0,25),
+                    round: 0
                 });
             });
     }
@@ -290,7 +303,8 @@ popup_negative() {
                     pos_arr: [], 
                     neg_arr: [],
                     image_arr: res.data.slice(-25), 
-                    vis_arr: tmp.slice(0,25)
+                    vis_arr: tmp.slice(0,25),
+                    round: 0
                 });
             });
     }
@@ -347,7 +361,7 @@ popup_negative() {
         );
 
         if (this.state.loading) {
-            data = <div className='training'></div>
+            data = <div className='training'>Round {this.state.round.toString()}</div>
         }
         else {
             data = <div className='training'>Round {this.state.round.toString()}</div>
@@ -359,30 +373,27 @@ popup_negative() {
 
         return (    
 
-            <div className="container-fluid">
-               <div className="row">
-                    {data}
-                </div> 
+            <div className="container">
                 <div className="row">
-                    <div className="border-extra-neg col">
-                        <NegativeContainer negImageIdFromParent={this.state.neg_arr}/>
-                    </div>
-                    <div className="col-md-auto">
-                        {this.grid(Images,5)}
-                    </div>
                     <div className="border-extra-pos border-success col">
-                        <PositiveContainer posImageIdFromParent={this.state.pos_arr} /*callBackFromParent={this.myCallBack.bind(this)}*//>
+                            <PositiveContainer posImageIdFromParent={this.state.pos_arr} /*callBackFromParent={this.myCallBack.bind(this)}*//>
+                        </div>
+                        <div className="col-md-auto">
+                            {this.grid(Images,5)}
+                        </div>
+                        <div className="border-extra-neg col">
+                            <NegativeContainer negImageIdFromParent={this.state.neg_arr}/>
+                        </div>
                     </div>
-                </div>
                 <div className='row'>
-                    <div className='col negAllCont'>
-                        {this.popup_negative()}
+                    <div className='col posAllCont'>
+                        {this.popup_positive()}
                     </div>
                     <div className='col d-flex reset-room'>
-                        <div className='p-2 button-p-2'>
+                        <div className='p-2 button-p-2 update-b'>
                             <UpdateThemeButton updateThemeOnClickFromBtn={this.updateThemeOnClick.bind(this)}/>
                         </div>
-                        <div className='p-2 button-p-2'>
+                        <div className='p-2 button-p-2 update-b'>
                             <UpdateRandomButton updateRandomOnClickFromBtn={this.updateRandomOnClick.bind(this)}/>
                         </div>
                         <div className='p-2 button-p-2'>
@@ -390,10 +401,10 @@ popup_negative() {
                         </div>
                         <div className='p-2 button-p-2'>
                             <ResetRandomButton resetRandomOnClickFromBtn={this.resetRandomOnClick.bind(this)}/>
-                        </div>
+                        </div> 
                     </div>
-                    <div className='col posAllCont'>
-                        {this.popup_positive()}
+                    <div className='col negAllCont'>
+                        {this.popup_negative()}
                     </div>
                 </div>
             </div>     
