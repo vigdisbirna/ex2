@@ -20,14 +20,14 @@ import PerfectScrollbar from 'react-perfect-scrollbar';
 export default class ImageContainer extends React.Component {
     constructor(props) {
         super(props);
-        this.state = {image_arr: [], vis_arr: [],  pos_arr: [], neg_arr: [], interval: null, pos_cnt: 0, neg_cnt: 0, loading: false, round: 0};
-        //this.state = {image_arr: Array.from(Array(50).keys()), vis_arr: Array.from(Array(50).keys()),  pos_arr: [], neg_arr: [], interval: null, pos_cnt: 0, neg_cnt: 0, loading: false, round: 0};
+        //this.state = {image_arr: [], vis_arr: [],  pos_arr: [], neg_arr: [], interval: null, pos_cnt: 0, neg_cnt: 0, loading: false, round: 0};
+        this.state = {image_arr: Array.from(Array(50).keys()), vis_arr: Array.from(Array(50).keys()),  pos_arr: [], neg_arr: [], interval: null, pos_cnt: 0, neg_cnt: 0, loading: false, round: 0};
     }
 
     componentDidMount() {
-        this.initialize();        
+        /*this.initialize();        
         var intv = setInterval(this.loadData.bind(this), 5000);
-        this.setState({interval: intv});
+        this.setState({interval: intv});*/
     }
 
     componentWillUnmount() {

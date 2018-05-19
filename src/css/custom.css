@@ -18,6 +18,42 @@ body {
 
 .sidebar {
   color: #ffdd00;
+  background-color: #ffdd002d;
+  border: 3px solid;
+  border-color: #ffdd00; 
+  padding: 3%;
+  grid-row-gap: 10px;
+}
+
+div.sidebar-content {
+  font-size: 20px;
+}
+
+.footer {
+  color: #ffdd00;
+}
+
+.sub-info {
+  margin-top: 1%;
+  margin-bottom: 1%;
+}
+
+.footer-container {
+  margin-top: 10%;
+  margin-bottom: 2%;
+  border-top: 3px;
+  border-color: #ffdd00;
+}
+
+.rulogo {
+  height: 50px;
+  width: 50px;
+} 
+
+.logo {
+  height: 55px;
+  width: 205px;
+  margin-top: 5%;
 }
 
 div.border-success {

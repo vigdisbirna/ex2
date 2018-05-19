@@ -24,23 +24,33 @@ export default class Layout extends React.Component {
 
     render () {
 
-
         return (
             <div className="container-fluid">
                 <div className="row">
                     <div className="col-2">
                         <Header changeTitle={this.changeTitle.bind(this)} title={this.state.title} /> 
                     </div>
-                    <div className="col-9">
+                    <div className="col-8">
+                    </div>
+                </div>
+                <div className="row">
+                    <div className="col-2 sub-info">
+                        <h4> Collection: YFCC100M </h4>
+                        <h4> Images: 99.206.564 </h4>
+                    </div>
+                    <div className="col-8">
                     </div>
                 </div>
                 <div className="row">
                     <div className="col-2">
                         <LeftSidebar />
                     </div>
-                    <div className="col-9"> 
+                    <div className="col-8"> 
                         <ImageContainer /> 
                     </div>
+                </div>
+                <div className="row footer-container">
+                        <Footer />
                 </div>
             </div>
         );

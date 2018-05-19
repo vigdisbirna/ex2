@@ -4,7 +4,7 @@ export default class Title extends React.Component {
 
     render () {
         return (
-            <h1 className="display-4 d-flex justify-content-center"> 
+            <h1 className="display-4 d-flex"> 
                 {this.props.title}
             </h1>
         );
