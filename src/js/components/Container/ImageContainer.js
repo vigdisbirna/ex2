@@ -20,7 +20,7 @@ import PerfectScrollbar from 'react-perfect-scrollbar';
 export default class ImageContainer extends React.Component {
     constructor(props) {
         super(props);
-        this.state = {image_arr: [], vis_arr: [],  pos_arr: [], neg_arr: [], interval: null, pos_cnt: 0, neg_cnt: 0, loading: false, round: 0};
+        this.state = {time: 0, avg_time: 0, image_arr: [], vis_arr: [],  pos_arr: [], neg_arr: [], interval: null, pos_cnt: 0, neg_cnt: 0, loading: false, round: 0};
         //this.state = {image_arr: Array.from(Array(50).keys()), vis_arr: Array.from(Array(50).keys()),  pos_arr: [], neg_arr: [], interval: null, pos_cnt: 0, neg_cnt: 0};
     }
 
@@ -142,7 +142,7 @@ popup_negative() {
             var pos_size = this.state.pos_arr.length -1;
             var neg_size = this.state.neg_arr.length -1;
             while(i < this.state.pos_cnt) {
-                pos_send.push(this.state.pos_arr[pos_size- i]);
+                pos_send.push(this.state.pos_arr[pos_size - i]);
                 i++;
             }
             i = 0
@@ -285,12 +285,14 @@ popup_negative() {
             'Content-Type': 'application/json'
             }}).then(res => {
                 console.log(res);
-                var tmp = res.data;
+                var tmp = res.data.sugg;
                 this.setState({
                     pos_arr: [], 
                     neg_arr: [],
-                    image_arr: res.data.slice(-25), 
-                    vis_arr: tmp.slice(0,25)
+                    image_arr: res.data.sugg.slice(-25), 
+                    vis_arr: tmp.slice(0,25),
+                    avg_time: (this.state.time + res.data.time) / this.state.round,
+                    time: res.data.time
                 });
             });
     }
