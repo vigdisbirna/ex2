@@ -13,15 +13,13 @@ import ResetRandomButton from "../Buttons/ResetRandomButton.js";
 import UpdateRandomButton from "../Buttons/UpdateRandomButton.js";
 import Popup from "reactjs-popup";
 import scrollArea from "react-scrollbar";
-import 'react-perfect-scrollbar/dist/css/styles.css'
+import 'react-perfect-scrollbar/dist/css/styles.css';
 import PerfectScrollbar from 'react-perfect-scrollbar';
-
 
 export default class ImageContainer extends React.Component {
     constructor(props) {
         super(props);
-        this.state = {time: 0, avg_time: 0, image_arr: [], vis_arr: [],  pos_arr: [], neg_arr: [], interval: null, pos_cnt: 0, neg_cnt: 0, loading: false, round: 0};
-        //this.state = {image_arr: Array.from(Array(50).keys()), vis_arr: Array.from(Array(50).keys()),  pos_arr: [], neg_arr: [], interval: null, pos_cnt: 0, neg_cnt: 0};
+        this.state = {time: 0, sum_time: 0, avg_time: 0, image_arr: [], vis_arr: [],  pos_arr: [], neg_arr: [], interval: null, pos_cnt: 0, neg_cnt: 0, loading: false, round: 0};
     }
 
     componentDidMount() {
@@ -60,7 +58,6 @@ export default class ImageContainer extends React.Component {
         <Popup trigger={<button className='btn btn-success posAll'>Show all</button>} modal closeOnDocumentClick contentStyle={contentStyle}>
             {this.grid(Images,rows)}           
         </Popup>
-    
     );
     };
 
@@ -137,11 +134,9 @@ popup_negative() {
         console.log("neg counter");
         console.log(this.state.neg_cnt)
         
-
         if(this.state.pos_cnt != 0 || this.state.neg_cnt != 0) {
             console.log("enough data wuhu");
 
-            var temp = this.state.round;
             this.setState({loading: true});
             var pos_send = [];
             var neg_send = [];
@@ -171,12 +166,23 @@ popup_negative() {
                 headers: {
                 'Content-Type': 'application/json',
                 }}).then(res => {
-                    this.setState({image_arr: res.data, pos_cnt: 0, neg_cnt: 0, loading: false, round: temp + 1});
+                    this.setState(prevState => ({
+                        image_arr: res.data.sugg, 
+                        pos_cnt: 0, 
+                        neg_cnt: 0, 
+                        loading: false, 
+                        round: prevState.round + 1,
+                        sum_time: prevState.sum_time + res.data.time,
+                        avg_time: (prevState.sum_time + res.data.time)/(prevState.round+1),
+                        time: res.data.time
+                    }));
+                    console.log(this.state.time);
+                    console.log(this.state.avg_time);
                     console.log(res);
-                    console.log('image arr is:');
-                    console.log(this.state.image_arr);
-                    console.log('vis arr is:');
-                    console.log(this.state.vis_arr);
+                    //console.log('image arr is:');
+                    //console.log(this.state.image_arr);
+                    //console.log('vis arr is:');
+                    //console.log(this.state.vis_arr);
             });
         }
         else {
@@ -190,9 +196,9 @@ popup_negative() {
         var arr = this.state.image_arr;
 
         temp[i] = arr[0];
-        console.log("changeOnClick");
-        console.log(temp[i]);
-        console.log(i);
+        //console.log("changeOnClick");
+        //console.log(temp[i]);
+        //console.log(i);
 
         arr.shift();
 
@@ -211,9 +217,9 @@ popup_negative() {
         var arr = this.state.image_arr;
 
         temp[i] = arr[0];
-        console.log("changeOnClick");
-        console.log(temp[i]);
-        console.log(i);
+        //console.log("changeOnClick");
+        //console.log(temp[i]);
+        //console.log(i);
 
         arr.shift();
 
@@ -239,12 +245,10 @@ popup_negative() {
         this.setState({
             image_arr: arr.slice(-25), 
             vis_arr: tmp.slice(0,25),
-            round: temp + 1
         });
     }
 
     updateThemeOnClick() {
-
         var temp = this.state.round;
         axios({
             method: 'get',
@@ -252,13 +256,18 @@ popup_negative() {
             headers: {
             'Content-Type': 'application/json'
             }}).then(res => {
-                console.log(res);
-                var tmp = res.data;
-                this.setState({
-                    image_arr: res.data.slice(-25), 
+                //console.log(res);
+                var tmp = res.data.sugg;
+                this.setState(prevState => ({
+                    image_arr: res.data.sugg.slice(-25), 
                     vis_arr: tmp.slice(0,25),
-                    round: temp + 1
-                });
+                    round: prevState.round + 1,
+                    sum_time: prevState.sum_time + (res.data.time),
+                    avg_time: (prevState.sum_time + res.data.time)/(prevState.round+1),
+                    time: res.data.time 
+                }));
+                console.log(this.state.time)
+                console.log(this.state.avg_time)
                 console.log('vis_arr is:')
                 console.log(this.state.vis_arr)
                 console.log('image_arr is:')
@@ -285,7 +294,10 @@ popup_negative() {
                     neg_arr: [],
                     image_arr: arr.slice(-25), 
                     vis_arr: tmp.slice(0,25),
-                    round: 0
+                    round: 0,
+                    sum_time: 0,
+                    avg_time: 0,
+                    time: 0
                 });
             });
     }
@@ -297,17 +309,20 @@ popup_negative() {
             headers: {
             'Content-Type': 'application/json'
             }}).then(res => {
-                console.log(res);
+                //console.log(res);
                 var tmp = res.data.sugg;
-                this.setState({
+                this.setState(prevState => ({
                     pos_arr: [], 
                     neg_arr: [],
                     round: 1,
                     image_arr: res.data.sugg.slice(-25), 
                     vis_arr: tmp.slice(0,25),
-                    avg_time: (this.state.time + res.data.time) / this.state.round,
+                    sum_time: prevState.sum_time + res.data.time,
+                    avg_time: (prevState.sum_time + res.data.time)/1,
                     time: res.data.time
-                });
+                }));
+                console.log(this.state.time)
+                console.log(this.state.avg_time)
             });
     }
 
@@ -317,9 +332,9 @@ popup_negative() {
         var arr = this.state.image_arr;
 
         temp[i] = arr[0];
-        console.log("changeOnClick");
-        console.log(temp[i]);
-        console.log(i);
+        //console.log("changeOnClick");
+        //console.log(temp[i]);
+        //console.log(i);
 
         arr.shift();
 
