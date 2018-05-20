@@ -37,7 +37,7 @@ export default class LeftSidebar extends React.Component {
                 </div>
                 <div className="row sidebar-content">
                     <div className="col-9"> Average Time: </div>
-                    <div className="col-2 num">{Math.round((this.props.avg_score_timeFromParent*8)*100) / 100}s</div>
+                    <div className="col-2 num">{Math.round((this.props.avg_score_timeFromParent*2)*100) / 100}s</div>
                 </div>
             </div>
         );
