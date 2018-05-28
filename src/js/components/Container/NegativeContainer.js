@@ -23,7 +23,6 @@ export default class NegativeContainer extends React.Component {
     }
 
     render() {
-      
         return (
             <div>
                 {this.renderList(this.props.negImageIdFromParent)}

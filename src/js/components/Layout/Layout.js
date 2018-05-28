@@ -6,6 +6,7 @@ import Image from "../Image/Image";
 import LeftSidebar from "./LeftSidebar";
 import ImageContainer from "../Container/ImageContainer"
 import Popup from "reactjs-popup";
+import cookie from 'react-cookies';
 
 
 export default class Layout extends React.Component {
@@ -14,16 +15,29 @@ export default class Layout extends React.Component {
         super();
         this.state = {
             title: "Exquisitor",
+            userId: cookie.load('userId')
         };
     }
+
+    componentWillMount() {
+        if(this.state.userId === undefined) {
+            const uuidv4 = require('uuid/v4');
+            
+            cookie.save('userId', uuidv4(), {path: '/', maxAge: 1000000});
+            this.setState({userId: cookie.load('userId')});
+        }
+        console.log("cookie: " + this.state.userId);
+    }
+    
+    /*componentWillUnmount() {
+        cookie.remove('userId', { path: '/'});
+    }*/
 
     changeTitle(title) {
         this.setState({title: title});
     }
 
-
     render () {
-
         return (
             <ImageContainer /> 
         );

@@ -1,17 +1,27 @@
+.app
+{
+  width:60%;
+  min-width:100px;
+  max-width:2000px
+}
+
 h1 {
     color: #ffdd00;
-    
 }
 
 .button-p-2 {
   padding: 0%;
 }
 
+
 h4 {
   color: #ffdd00;
 }
 
 body {
+    height: 70%;
+    width: 90%;
+    margin: auto;
     background-color: black;
     font-family: 'Roboto', sans-serif;
 }

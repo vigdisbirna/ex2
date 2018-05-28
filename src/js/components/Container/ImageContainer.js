@@ -7,6 +7,8 @@ import PositiveContainer from "./PositiveContainer";
 import NegativeContainer from "./NegativeContainer";
 import UpdateThemeButton from "../Buttons/UpdateThemeButton";
 import ResetThemeButton from "../Buttons/ResetThemeButton";
+import FinishButton from "../Buttons/FinishButton";
+import SaveButton from "../Buttons/SaveButton";
 import ShowPositive from "../Buttons/ShowPositive";
 import ShowNegative from "../Buttons/ShowNegative";
 import ResetRandomButton from "../Buttons/ResetRandomButton.js";
@@ -42,7 +44,7 @@ export default class ImageContainer extends React.Component {
     }
 
     componentWillUnmount() {
-        print('yo:componentWillUnmount');
+        //print('yo:componentWillUnmount');
         clearInterval(this.state.interval);
     }
 
@@ -366,6 +368,10 @@ popup_negative() {
         }));
     }
 
+    saveOrFinishOnClick() {
+        alert('pressed save or finish');
+    }
+
     row(Images,counter){
         var column = [];
         var num = 5;
@@ -411,7 +417,7 @@ popup_negative() {
         //console.log(Images);
 
         return (    
-            <div className="container-fluid">
+            <div /*className="container-fluid"*/ >
             <div className="row header-room">
                 <div className="col-2">
                     <Header/> 
@@ -422,6 +428,14 @@ popup_negative() {
             <div className="row">
                 <div className="col-2">
                     <LeftSidebar timerFromParent={this.state.session_timer} num_posFromParent={this.state.pos_arr.length} num_negFromParent={this.state.neg_arr.length} roundsFromParent={this.state.round} avg_score_timeFromParent={this.state.avg_time} />
+                    <div className="col d-flex reset-room">
+                        <div className='p-2 button-p-2'>
+                            <FinishButton finishSessionOnClickFromBtn={this.saveOrFinishOnClick.bind(this)}/>
+                        </div>
+                        <div className='p-2 button-p-2 '>
+                            <SaveButton saveDataOnClickFromBtn={this.saveOrFinishOnClick.bind(this)}/>
+                        </div>
+                    </div>
                 </div>
                 <div className="col-8">
             <div className="container">
@@ -457,6 +471,7 @@ popup_negative() {
                     <div className='col negAllCont'>
                         {this.popup_negative()}
                     </div>
+                  
                 </div>
             </div>
             </div>
