@@ -12,7 +12,7 @@ export default class ImageHover extends React.Component {
         //this.setState({ source: "/src/assets/black.jpg"});
         axios
         .get(
-            'http://192.168.1.149/~ThorhildurThorleiksdottir/images/placing-test-thumbnails/' + this.props.imageId.toString() + '.jpg',
+            'http://localhost:9999/images/placing-test-thumbnails/' + this.props.imageId.toString() + '.jpg',
             { responseType: 'arraybuffer' },
           )
           .then(response => {
@@ -41,7 +41,7 @@ export default class ImageHover extends React.Component {
         
         axios
         .get(
-            'http://192.168.1.149/~ThorhildurThorleiksdottir/images/placing-test-thumbnails/' + this.props.imageId.toString() + '.jpg',
+            'http://localhost:9999/images/placing-test-thumbnails/' + this.props.imageId.toString() + '.jpg',
             { responseType: 'arraybuffer' },
           )
           .then(response => {
