@@ -20,13 +20,16 @@ export default class Layout extends React.Component {
     }
 
     componentWillMount() {
+
+        console.log("cookie.load: " + cookie.load('userId'));
         if(this.state.userId === undefined) {
-            const uuidv4 = require('uuid/v4');
-            
-            cookie.save('userId', uuidv4(), {path: '/', maxAge: 1000000});
+            console.log("cookie is undefined");
+            cookie.save('userId', 'myCookieValue', {path: '/'}); 
             this.setState({userId: cookie.load('userId')});
         }
+        
         console.log("cookie: " + this.state.userId);
+        
     }
     
     /*componentWillUnmount() {
@@ -39,7 +42,7 @@ export default class Layout extends React.Component {
 
     render () {
         return (
-            <ImageContainer /> 
+            <ImageContainer userId={this.state.userId}/> 
         );
     }
 } 
