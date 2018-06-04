@@ -23,13 +23,12 @@ export default class Layout extends React.Component {
 
         console.log("cookie.load: " + cookie.load('userId'));
         if(this.state.userId === undefined) {
-            console.log("cookie is undefined");
-            cookie.save('userId', 'myCookieValue', {path: '/'}); 
-            this.setState({userId: cookie.load('userId')});
+            //console.log("cookie is undefined");
+            //cookie.save('userId', 'myCookieValue', {path: '/'}); 
+            cookie.remove('userId', {path: '/'});
+            //this.setState({userId: cookie.load('userId')});
         }
-        
-        console.log("cookie: " + this.state.userId);
-        
+        console.log("cookie: " + this.state.userId);   
     }
     
     /*componentWillUnmount() {
@@ -39,6 +38,22 @@ export default class Layout extends React.Component {
     changeTitle(title) {
         this.setState({title: title});
     }
+
+    getCookie() {
+        axios({
+            method: 'get',
+            url: 'http://localhost:5001/getCookie',
+            headers: {
+            'Content-Type': 'application/json',
+            },
+            
+        }).then(res => {
+                console.log('my get request worked');
+                console.log('value for my cookie here');
+            });
+    }
+
+
 
     render () {
         return (
