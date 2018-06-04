@@ -129,6 +129,7 @@ popup_negative() {
         axios({
             method: 'get',
             url: 'http://localhost:5001/init',
+            params : {userId: (this.props.userId).toString()},
             headers: {
             'Content-Type': 'application/json',
             },

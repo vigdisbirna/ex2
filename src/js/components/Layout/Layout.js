@@ -1,4 +1,5 @@
 import React from "react";
+import axios from 'axios'
 import ReactDOM from "react-dom";
 import Header from "./Header";
 import Footer from "./Footer";
@@ -21,14 +22,11 @@ export default class Layout extends React.Component {
 
     componentWillMount() {
 
-        console.log("cookie.load: " + cookie.load('userId'));
-        if(this.state.userId === undefined) {
-            //console.log("cookie is undefined");
-            //cookie.save('userId', 'myCookieValue', {path: '/'}); 
-            cookie.remove('userId', {path: '/'});
-            //this.setState({userId: cookie.load('userId')});
+        //console.log("cookie.load: " + cookie.load('userId'));
+        if(cookie.load('userId') === undefined) {
+            this.getCookie();
         }
-        console.log("cookie: " + this.state.userId);   
+        //console.log("cookie: " + this.state.userId);   
     }
     
     /*componentWillUnmount() {
@@ -48,12 +46,13 @@ export default class Layout extends React.Component {
             },
             
         }).then(res => {
-                console.log('my get request worked');
-                console.log('value for my cookie here');
+                var newId = res.data.userId;
+                cookie.save('userId', newId, {path: '/'});
+                this.setState({userId:cookie.load('userId')});
+                console.log("res.data.userId: " + res.data.userId);
             });
+            
     }
-
-
 
     render () {
         return (
