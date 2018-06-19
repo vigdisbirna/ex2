@@ -16,22 +16,18 @@ export default class Layout extends React.Component {
         super();
         this.state = {
             title: "Exquisitor",
-            userId: cookie.load('userId')
+            userId: cookie.load('user')
         };
     }
 
     componentWillMount() {
 
-        //console.log("cookie.load: " + cookie.load('userId'));
-        if(cookie.load('userId') === undefined) {
-            this.getCookie();
-        }
-        //console.log("cookie: " + this.state.userId);   
+        console.log('cookie: ' + cookie.load('user')) 
     }
     
-    /*componentWillUnmount() {
+    componentWillUnmount() {
         cookie.remove('userId', { path: '/'});
-    }*/
+    }
 
     changeTitle(title) {
         this.setState({title: title});
