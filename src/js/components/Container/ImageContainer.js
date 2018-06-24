@@ -20,7 +20,7 @@ import 'react-perfect-scrollbar/dist/css/styles.css';
 import PerfectScrollbar from 'react-perfect-scrollbar';
 import LeftSidebar from "../Layout/LeftSidebar";
 import Footer from "../Layout/Footer";
-import cookie from 'react-cookies';
+
 
 
 export default class ImageContainer extends React.Component {
@@ -117,7 +117,7 @@ popup_negative() {
         );
     };
 
-    initialize(userId) {
+    initialize() {
         console.log('sending Get !')
         var arr = []
         while(arr.length < 50){
@@ -132,7 +132,7 @@ popup_negative() {
             headers: {
             'Content-Type': 'application/json',
             },
-            withCredentials: true
+            //withCredentials: true
             
         }).then(res => {
                 var tmp = arr;

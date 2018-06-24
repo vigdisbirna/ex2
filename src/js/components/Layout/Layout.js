@@ -7,7 +7,7 @@ import Image from "../Image/Image";
 import LeftSidebar from "./LeftSidebar";
 import ImageContainer from "../Container/ImageContainer"
 import Popup from "reactjs-popup";
-import cookie from 'react-cookies';
+
 
 
 export default class Layout extends React.Component {
@@ -16,24 +16,22 @@ export default class Layout extends React.Component {
         super();
         this.state = {
             title: "Exquisitor",
-            userId: cookie.load('user')
+            
         };
     }
 
     componentWillMount() {
-
-        console.log('cookie: ' + cookie.load('user')) 
     }
     
     componentWillUnmount() {
-        cookie.remove('userId', { path: '/'});
+        
     }
 
     changeTitle(title) {
         this.setState({title: title});
     }
 
-    getCookie() {
+    /*getCookie() {
         axios({
             method: 'get',
             url: 'http://localhost:5001/getCookie',
@@ -48,7 +46,7 @@ export default class Layout extends React.Component {
                 console.log("res.data.userId: " + res.data.userId);
             });
             
-    }
+    }*/
 
     render () {
         return (

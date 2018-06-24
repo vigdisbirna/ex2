@@ -1,7 +1,9 @@
 import React from 'react';
 import axios from 'axios';
+//import keydown from 'react-keydown';
 import './Image_style.css';
 
+//@keydown
 export default class ImageHover extends React.Component {
     constructor(props) {
         super(props);
@@ -64,6 +66,14 @@ export default class ImageHover extends React.Component {
           });
         }
       }
+
+/*      componentWillReceiveProps( nextProps ) {
+        const { keydown: { event } } = nextProps;
+        if ( event ) {
+          this.setState( { key: event.which});
+          alert("worked");
+        }
+      }*/
 
   render() {
     return (
