@@ -50,7 +50,7 @@ export default class Layout extends React.Component {
 
     render () {
         return (
-            <ImageContainer userId={this.state.userId}/> 
+            <ImageContainer/> 
         );
     }
 } 

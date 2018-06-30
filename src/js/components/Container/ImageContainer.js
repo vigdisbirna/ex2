@@ -23,16 +23,18 @@ import Footer from "../Layout/Footer";
 
 
 
+
 export default class ImageContainer extends React.Component {
     constructor(props) {
         super(props);
 
-        //this.state = {image_arr: [], vis_arr: [],  pos_arr: [], neg_arr: [], interval: null, pos_cnt: 0, neg_cnt: 0, loading: false, round: 0};
-       // this.state = {image_arr: Array.from(Array(50).keys()), vis_arr: Array.from(Array(50).keys()),  pos_arr: [], neg_arr: [], interval: null, pos_cnt: 0, neg_cnt: 0, loading: false, round: 0};
+        /*this.state = {image_arr: Array.from(Array(50).keys()), vis_arr: Array.from(Array(50).keys()), 
+                     pos_arr: [], neg_arr: [], interval: null, 
+                     pos_cnt: 0, neg_cnt: 0, loading: false, round: 0};*/
 
         this.state = {time: 0, sum_time: 0, session_timer: 0, 
-                    avg_time: 0, image_arr: [], 
-                    vis_arr: [],  pos_arr: [], neg_arr: [], 
+                    avg_time: 0, image_arr: [],
+                    vis_arr: [], vis_arr_source: [], pos_arr: [], neg_arr: [], 
                     interval: null, pos_cnt: 0, neg_cnt: 0, 
                     loading: false, round: 0, userId: this.props.userId};
 
@@ -128,6 +130,7 @@ popup_negative() {
     
         axios({
             method: 'get',
+            //url: 'http://192.168.1.128:5001/init',
             url: 'http://localhost:5001/init',
             headers: {
             'Content-Type': 'application/json',
@@ -142,6 +145,16 @@ popup_negative() {
                 });
 
                 console.log(res);
+                
+                var size = (this.state.vis_arr).length;
+               
+
+
+                for(var i = 0; i < size; i++) {
+                    //vis_arr2.push(this.getImages(vis_arr[i]));
+                    //console.log(this.state.vis_arr[i]);
+                    //vis_arr2.push(temp);
+                }
                 
                 //var tmp = res.data;
                 //this.setState({
@@ -192,15 +205,16 @@ popup_negative() {
             console.log(neg_send);
             axios({
                 method: 'post',
+
+                //url: 'http://192.168.1.128:5001/learn',
                 url: 'http://localhost:5001/learn',
-                params: {userId: (this.props.userId).toString()},
                 data: {"pos": pos_send, "neg": neg_send},
                 //data: {"pos":[205184, 1434920, 628770, 996981, 1498999], "neg":[1204751, 652837, 126553, 444500, 562808, 289004, 1304436, 1267878, 779381, 373122, 344467, 112635, 1195480, 919759, 1097026, 1405437, 1082330, 206936, 419696, 385295, 1071078, 834200, 630266, 826533, 337513, 226962, 549076, 1091162, 514520, 194552, 378336, 689210, 956037, 506132, 598172, 438651, 932860, 273433, 432193, 1120997, 504388, 198492, 978275, 998146, 1369446, 1231115, 863451, 1414852, 1266696, 957149, 766538, 1497839, 352509, 946142, 873132, 183645, 1325906, 676795, 819663, 1124820, 423116, 117691, 1428357, 524561, 940900, 1188178, 1113839, 811448, 445473, 61979, 1161657, 835207, 114952, 1049130, 1191258, 336337, 838882, 1202972, 923655, 539574, 358863, 525807, 1277982, 849936, 53155, 1101368, 154084, 1369843, 485161, 272079, 354267, 343382, 453196, 239875, 6151, 911754, 335043, 236151, 1210440, 334363]},
                 headers: {
                 'Content-Type': 'application/json',
                 //'Cookie' : this.props.userId
                 }, 
-                withCredentials: true,
+                //withCredentials: true,
 
                 }).then(res => {
                     this.setState(prevState => ({
@@ -289,12 +303,13 @@ popup_negative() {
         var temp = this.state.round;
         axios({
             method: 'get',
+
+            //url: 'http://192.168.1.128:5001/updateTheme',
             url: 'http://localhost:5001/updateTheme',
-            params: {userId: (this.props.userId).toString()},
             headers: {
             'Content-Type': 'application/json', 
             },
-            withCredentials: true,
+            //withCredentials: true,
 
             }).then(res => {
                 //console.log(res);
@@ -325,12 +340,13 @@ popup_negative() {
         }
         axios({
             method: 'get',
+            //url: 'http://192.168.1.128:5001/resetModel',
             url: 'http://localhost:5001/resetModel',
-            params: {userId: (this.props.userId).toString()},
+
             headers: {
             'Content-Type': 'application/json', 
             },
-            withCredentials: true
+            //withCredentials: true
             }).then(res => {
                 var tmp = arr;
                 this.setState({
@@ -350,12 +366,13 @@ popup_negative() {
     resetThemeOnClick() {
         axios({
             method: 'get',
+            //url: 'http://192.168.1.128:5001/resetTheme',
             url: 'http://localhost:5001/resetTheme',
-            params: {userId: (this.props.userId).toString()},
+
             headers: {
             'Content-Type': 'application/json',
             },
-            withCredentials: true
+            //withCredentials: true
             }).then(res => {
                 //console.log(res);
                 var tmp = res.data.sugg;
@@ -447,12 +464,57 @@ popup_negative() {
         return rows;
     }
 
+    getImages(image_id, i) {
+        
+        var source;
+        
+        //get the image for certain image id
+        axios
+        .get(
+            'http://localhost:9999/images/placing-test-thumbnails/' + image_id.toString() + '.jpg',
+
+            { responseType: 'arraybuffer' },
+          )
+          .then(response => {
+            const base64 = btoa(
+              new Uint8Array(response.data).reduce(
+                (data, byte) => data + String.fromCharCode(byte),
+                '',
+              ));
+            //this.setState({ source: "data:;base64," + base64 });
+            source = "data:;base64," + base64;
+            
+            //var tag = <img alt={image_id} src={source}/>;
+            //console.log(tag);
+            
+            var new_vis_arr_source = this.state.vis_arr_source;
+            new_vis_arr_source[i] = source;
+            this.setState({vis_arr_source: new_vis_arr_source});
+          
+            })
+          .catch(error => {
+              console.log(error.response.data);
+              console.log(error.response.status);
+              console.log(error.response.headers);
+              
+              //this.setState({ source: "/src/assets/notFound.jpg"});
+              source = "/src/assets/notFound.jpg";
+          });
+    }
+
     render() {
 
         let data;
         const Images = this.state.vis_arr.map((id, i) =>
             <ImageHover key={i} id={id} imageId={id} changeOnClickPosFromContainer={this.changeOnClickPos.bind(this, id, i)} changeOnClickNegFromContainer={this.changeOnClickNeg.bind(this, id, i)} changeOnClickSkipFromContainer={this.changeOnClickSkip.bind(this,id,i)}/>
         );
+
+       /* this.state.vis_arr.map((id, i) => this.getImages(id, i));
+       
+        const newImages = this.state.vis_arr.map((id, i) => 
+            <ImageHover key={i} id={id} theImage={<img alt={id} src={this.state.vis_arr_source[i]} className="d-flex justify-content-center rounded"/>}/>);
+        */
+        //console.log("visarr seinna í render: " + this.state.vis_arr)
 
         if (this.state.loading) {
             data = <div className='training'>Round {this.state.round.toString()}</div>
@@ -479,7 +541,7 @@ popup_negative() {
                     <LeftSidebar timerFromParent={this.state.session_timer} num_posFromParent={this.state.pos_arr.length} num_negFromParent={this.state.neg_arr.length} roundsFromParent={this.state.round} avg_score_timeFromParent={this.state.avg_time} />
                     <div className="col d-flex reset-room">
                         <div>
-                            {this.finish()}
+                            {this.finish}
                         </div>
                         {/*<div className='p-2 button-p-2'>
                             <FinishButton finishSessionOnClickFromBtn={this.finishWithoutSavingOnClick.bind(this)}/>
@@ -507,7 +569,6 @@ popup_negative() {
                         <div className='col posAllCont'>
                             {this.popup_positive()}
                         </div>
-
                         <div className='p-2 button-p-2 update-b'>
                             <UpdateThemeButton updateThemeOnClickFromBtn={this.updateThemeOnClick.bind(this)}/>
                         </div>
@@ -519,8 +580,7 @@ popup_negative() {
                         </div>
                         <div className='p-2 button-p-2'>
                             <ResetRandomButton resetRandomOnClickFromBtn={this.resetRandomOnClick.bind(this)}/>
-                        </div>
-                        
+                        </div>  
                         <div className='col negAllCont'>
                             {this.popup_negative()}
                         </div> 

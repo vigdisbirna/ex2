@@ -4,7 +4,7 @@ div.show-image {
     margin: 10px;
   
 }
-div.show-image:hover img{
+div.show-image:hover img {
     opacity:1;
     border-width:1%;
     border-style: solid;
@@ -31,7 +31,8 @@ div.show-image input.skip {
     right:2%;
 }
 
-img {
+img { 
     height: 70px;
     width: 70px;
+    
 }

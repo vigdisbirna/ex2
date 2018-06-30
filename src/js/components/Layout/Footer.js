@@ -5,7 +5,7 @@ export default class Footer extends React.Component {
     render () {
         return (
             <div className="container">
-                <div className="row d-flex justify-content-center Bootstrap love footer "> 
+                <div id="names" className="row d-flex justify-content-center Bootstrap love footer "> 
                         Hanna Ragnarsdóttir • Þórhildur Þorleiksdóttir • Björn Þór Jónsson • Gylfi Þór Guðmundsson • Jan Zahálka • Stevan Rudinac 
                 </div>
                 <div className="row d-flex justify-content-center">

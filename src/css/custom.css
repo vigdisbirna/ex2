@@ -3,6 +3,10 @@ h1 {
   font-size: 12px;
 }
 
+#title {
+  font-size: 36px;
+}
+
 .button-p-2 {
   padding: 0%;
 }
@@ -41,9 +45,7 @@ div.sidebar-content {
   padding-bottom:1%;
 }
 
-.sidebar-content > 
-
-div.num {
+.sidebar-content > div.num {
   display: flex;
   justify-content: flex-end;
   
@@ -79,6 +81,7 @@ div.num {
 div.border-success {
   background-color: #28a74670;
   max-height: 700px;
+  max-width: 15%;
   overflow: auto;
 }
 
@@ -97,7 +100,8 @@ div.border-success h5 {
   border: 3px solid;
   background-color: #a500107c;
   border-color: #a50010;
-  max-height: 700px;
+  max-height: 70%;
+  max-width: 15%;
   overflow: auto;
 }
 
@@ -107,15 +111,15 @@ div.border-success h5 {
 
 }
 
-p.love {
+love p {
   color: #ffdd00;
-  font-size: 11px;
+  font-size: 9px;
   margin-top: 2%;
 }
 
 div.header-room {
-  margin-bottom: 1%;
-  margin-top:2%;
+  /*margin-bottom: 1%;*/
+  margin-top:1%;
 }
 
 div.reset-room {
@@ -300,15 +304,15 @@ button.posAll {
 
 .main {
   max-height: 450px;
-  width: 700px;
+  width: 100%;
   justify-content: flex-end;
 }
 
 html {
-/*  width: 100%;
-  height: 100%;*/
-  min-width: 1000px;
-  min-height: 1500px;
+  width: 100%;
+  height: 100%;
+  /*max-width: 500px;*/
+  /*max-height: 1500px;*/
 }
 
 @media only screen and (max-width: 1000px) {
