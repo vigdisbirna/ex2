@@ -2,10 +2,16 @@ import React from "react";
 import axios from 'axios';
 import PropTypes from 'prop-types';
 import Image from "../Image/Image";
+import Slider from "react-slick";
+
 
 export default class PositiveContainer extends React.Component {
 	constructor() {
-		super();
+        super();
+        
+        this.state = {
+            autoplay: false
+        };
     }
     
     //componentWillReceiveProps() {
@@ -39,25 +45,53 @@ export default class PositiveContainer extends React.Component {
 		}));
     }*/
     
-    renderList(imgs) {
+    renderCarousel(imgs) {
         var list = [];
+        var tempList = [];
         var count = 0;
-        for (var i = imgs.length-1;  i >= 0; i--) {
-            //if (count < 5) {
-                list.push(<div className="d-flex justify-content-center" key={i}> <Image key={i} imageId={imgs[i]}/> </div>);
-               // count++;
-            //}
-            //console.log(this.state.pos[i]);
+        for(var i = imgs.length-1; i >= 0; i--) {
+            if(count >= 6) {    
+                var box = <div key={count} className="flex-container">{tempList}</div>;
+                list.push(box);
+                count = 0;
+                tempList = [];
+            }
+
+            tempList.push(<div key={i}> <Image key={i} imageId={imgs[i]}/> </div>);
+            count++;
         }
+        
+        var box = <div key={list.length} className="f-container" style="display: flex;">{tempList}</div>;
+        list.push(box); 
+        
         return list;
+    }
+    
+    turnOnAutoPlay() {
+        this.setState({autoplay:true});
+    }
+
+    turnOffAutoPlay() {
+        this.setState({autoplay:false});
     }
 
     render() {
-      
+
+        var settings = {
+            dots: true,
+            infinite: true,
+            speed: 500,
+            slidesToShow: 1,
+            slidesToScroll: 1,
+            arrows: false,
+            autoplay: true,
+            autoplaySpeed: 2000
+          };
+
         return (
-            <div>
-                {this.renderList(this.props.posImageIdFromParent)}
-            </div>
+            <Slider {...settings}>
+                {this.renderCarousel(this.props.posImageIdFromParent)}
+            </Slider>
         );
     }
 }

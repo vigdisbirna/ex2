@@ -7,7 +7,7 @@ export default class UpdateThemeButton extends React.Component {
 
     render() {
     	return (
-      		<button onClick={this.props.updateThemeOnClickFromBtn} className='btn btn-warning reset'>New Themed Set</button>
+      		<button style={this.props.style} onClick={this.props.updateThemeOnClickFromBtn} className='btn  reset'>New Themed Set</button>
     	);
   }
 }

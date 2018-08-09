@@ -20,6 +20,8 @@ import 'react-perfect-scrollbar/dist/css/styles.css';
 import PerfectScrollbar from 'react-perfect-scrollbar';
 import LeftSidebar from "../Layout/LeftSidebar";
 import Footer from "../Layout/Footer";
+import Slider from "react-slick";
+import Options from "./Options";    
 
 
 
@@ -34,15 +36,17 @@ export default class ImageContainer extends React.Component {
 
         this.state = {time: 0, sum_time: 0, session_timer: 0, 
                     avg_time: 0, image_arr: [],
-                    vis_arr: [], vis_arr_source: [], pos_arr: [], neg_arr: [], 
+                    vis_arr: [], vis_arr_source: [], image_arr_source: [], pos_arr: [], neg_arr: [], 
                     interval: null, pos_cnt: 0, neg_cnt: 0, 
-                    loading: false, round: 0, userId: this.props.userId};
-
+                    loading: false, round: 0, userId: this.props.userId, finished: false, 
+                    testing:true, currentImg: 0, activeSlide:0, positiveOn: false, negativeOn: false,
+                    numberOfImages: 25, eyeTrackerMode: false};
+        
+        //this.modifyImage = this.modifyImage.bind(this);
     }
 
     componentDidMount() {
-        var userId = this.props.userId;
-        this.initialize(userId);        
+        this.initialize();        
         var intv = setInterval(this.loadData.bind(this), 5000);
         var sec = setInterval(this.updateTimer.bind(this), 1000);
         this.setState({interval: intv});
@@ -100,7 +104,6 @@ popup_negative() {
         padding: "1% 0% 0% 1%",
         backgroundColor: "black",
         borderColor: "#a50010"
-        
     };
 
     //const container = document.querySelector('#container-scroll');
@@ -115,9 +118,9 @@ popup_negative() {
             <Popup trigger={<button className='btn btn-danger posAll'>Show all</button>} modal closeOnDocumentClick contentStyle={contentStyle}>
                 {this.grid(Images,rows)} 
             </Popup>
-        
         );
     };
+
 
     initialize() {
         console.log('sending Get !')
@@ -145,18 +148,17 @@ popup_negative() {
                 });
 
                 console.log(res);
+                this.state.image_arr.map((id, i) => this.getImages(id, i));
+                this.state.vis_arr.map((id, i) => this.getVisImage(id, i));
                 
-                var size = (this.state.vis_arr).length;
-               
-
-
-                for(var i = 0; i < size; i++) {
-                    //vis_arr2.push(this.getImages(vis_arr[i]));
-                    //console.log(this.state.vis_arr[i]);
-                    //vis_arr2.push(temp);
-                }
                 
-                //var tmp = res.data;
+                //arr.map((id, i) => this.getImages(id, i));
+                //arr.map((id, i) => this.getImages(id, i)); 
+
+                
+                //this.getArrImages(this.state.vis_arr);
+
+                //var tmp = res.data;   
                 //this.setState({
                     //image_arr: res.data.slice(-25), 
                     //vis_arr: tmp.slice(0,25)
@@ -217,6 +219,10 @@ popup_negative() {
                 //withCredentials: true,
 
                 }).then(res => {
+
+                    res.data.sugg.map((id, i) => this.getImages(id, i));
+                    console.log("length og image_arr_source when loading new data: " + this.state.image_arr_source.length);
+
                     this.setState(prevState => ({
                         image_arr: res.data.sugg, 
                         pos_cnt: 0, 
@@ -245,19 +251,27 @@ popup_negative() {
         //console.log(img);
         var temp = this.state.vis_arr;
         var arr = this.state.image_arr;
+        var temp_source = this.state.vis_arr_source;
+        var arr_source = this.state.image_arr_source;
 
         temp[i] = arr[0];
+        temp_source[i] = arr_source[0];
+        
+
         //console.log("changeOnClick");
         //console.log(temp[i]);
         //console.log(i);
 
         arr.shift();
+        arr_source.shift();
 
         this.setState(prevState => ({
             pos_arr: [...prevState.pos_arr, img_id],
             pos_cnt: prevState.pos_cnt + 1,
             image_arr: arr,
-            vis_arr: temp
+            vis_arr: temp,
+            image_arr_source: arr_source,
+            vis_arr_source: temp_source
         }));
        // setTimeout(console.log(this.state.vis_arr), 3000);
     }
@@ -266,19 +280,26 @@ popup_negative() {
         //console.log(img);
         var temp = this.state.vis_arr;
         var arr = this.state.image_arr;
+        var temp_source = this.state.vis_arr_source;
+        var arr_source = this.state.image_arr_source;
 
         temp[i] = arr[0];
+        temp_source[i] = arr_source[0];
+
         //console.log("changeOnClick");
         //console.log(temp[i]);
         //console.log(i);
 
         arr.shift();
+        arr_source.shift();
 
         this.setState(prevState => ({
             neg_arr: [...prevState.neg_arr, img_id],
             neg_cnt: prevState.neg_cnt + 1,
             image_arr: arr,
-            vis_arr: temp
+            vis_arr: temp,
+            image_arr_source: arr_source,
+            vis_arr_source: temp_source
         }));
        // setTimeout(console.log(this.state.vis_arr), 3000);
     }
@@ -287,16 +308,21 @@ popup_negative() {
     updateRandomOnClick(){
         var arr = []
         var temp = this.state.round;
+    
         while(arr.length < 50){
             var randomnumber = Math.floor(Math.random()*1500000) + 1;
             if(arr.indexOf(randomnumber) > -1) continue;
             arr[arr.length] = randomnumber;
         }
         var tmp = arr;
+
         this.setState({
             image_arr: arr.slice(-25), 
             vis_arr: tmp.slice(0,25),
         });
+
+        this.state.image_arr.map((id, i) => this.getImages(id, i));
+        this.state.vis_arr.map((id, i) => this.getVisImage(id, i));
     }
 
     updateThemeOnClick() {
@@ -322,6 +348,10 @@ popup_negative() {
                     avg_time: (prevState.sum_time + res.data.time)/(prevState.round+1),
                     time: res.data.time 
                 }));
+
+                this.state.image_arr.map((id, i) => this.getImages(id, i));
+                this.state.vis_arr.map((id, i) => this.getVisImage(id, i));
+
                 console.log(this.state.time)
                 console.log(this.state.avg_time)
                 console.log('vis_arr is:')
@@ -329,6 +359,8 @@ popup_negative() {
                 console.log('image_arr is:')
                 console.log(this.state.image_arr)
             });
+
+            console.log("done updateing theme on click");
     }
 
     resetRandomOnClick(){
@@ -360,7 +392,11 @@ popup_negative() {
                     session_timer: 0,
                     time: 0
                 });
+                this.state.image_arr.map((id, i) => this.getImages(id, i));
+                this.state.vis_arr.map((id, i) => this.getVisImage(id, i));
             });
+
+          
     }
 
     resetThemeOnClick() {
@@ -389,29 +425,38 @@ popup_negative() {
                 }));
                 console.log(this.state.time)
                 console.log(this.state.avg_time)
+
+                this.state.image_arr.map((id, i) => this.getImages(id, i));
+                this.state.vis_arr.map((id, i) => this.getVisImage(id, i));
             });
     }
 
-    changeOnClickSkip(img_id,i) {
+    changeOnClickSkip(i) {
         //console.log(img);
         var temp = this.state.vis_arr;
         var arr = this.state.image_arr;
+        var temp_source = this.state.vis_arr_source;
+        var arr_source = this.state.image_arr_source;
 
         temp[i] = arr[0];
+        temp_source[i] = arr_source[0]; 
         //console.log("changeOnClick");
         //console.log(temp[i]);
         //console.log(i);
 
         arr.shift();
+        arr_source.shift();
 
         this.setState(prevState => ({
             image_arr: arr,
-            vis_arr: temp
+            vis_arr: temp,
+            image_arr_source: arr_source,
+            vis_arr_source: temp_source
         }));
     }
 
     saveOrFinishOnClick() {
-        alert('pressed save or finish');
+        this.setState({finished: true})
     }
 
     finish() {
@@ -435,12 +480,12 @@ popup_negative() {
             </Popup>
 
         );
-
     }
 
     row(Images,counter){
         var column = [];
         var num = 5;
+        
         for (var i = 0; i < num; i++) {
             column.push( 
             <div key = {counter} className="col-">
@@ -449,6 +494,7 @@ popup_negative() {
             </div>);
             counter = counter + 1;
          } 
+
          return column;
     }
 
@@ -465,10 +511,10 @@ popup_negative() {
     }
 
     getImages(image_id, i) {
-        
         var source;
         
         //get the image for certain image id
+        
         axios
         .get(
             'http://localhost:9999/images/placing-test-thumbnails/' + image_id.toString() + '.jpg',
@@ -481,40 +527,119 @@ popup_negative() {
                 (data, byte) => data + String.fromCharCode(byte),
                 '',
               ));
-            //this.setState({ source: "data:;base64," + base64 });
+
             source = "data:;base64," + base64;
-            
-            //var tag = <img alt={image_id} src={source}/>;
-            //console.log(tag);
-            
+            var new_image_arr_source = this.state.image_arr_source;
+            new_image_arr_source[i] = source;
+            this.setState({image_arr_source: new_image_arr_source});
+          
+            })
+          .catch(error => {
+                console.log(error.response.data);
+                console.log(error.response.status);
+                console.log(error.response.headers);
+                
+                //source = "/src/assets/notFound.jpg";
+                
+                //get the best image from image_arr if the image was not found
+                //var new_image_arr_source = this.state.image_arr_source;
+                //new_image_arr_source[i] = source;
+                //this.setState({image_arr_source: new_image_arr_source});
+
+                console.log("image in image_arr notfound");
+                var arr = this.state.image_arr;
+                arr.splice(i, 1);
+                this.setState({image_arr: arr});
+                console.log("size of image_arr after removing: " + this.state.image_arr.length);
+          });
+    }
+
+
+    //get the image for 
+    getVisImage(image_id, i) {
+        
+        var source;
+        
+        axios
+        .get(
+            'http://localhost:9999/images/placing-test-thumbnails/' + image_id.toString() + '.jpg',
+
+            { responseType: 'arraybuffer' },
+          )
+          .then(response => {
+            const base64 = btoa(
+              new Uint8Array(response.data).reduce(
+                (data, byte) => data + String.fromCharCode(byte),
+                '',
+              ));
+
+            source = "data:;base64," + base64;
             var new_vis_arr_source = this.state.vis_arr_source;
             new_vis_arr_source[i] = source;
             this.setState({vis_arr_source: new_vis_arr_source});
           
             })
           .catch(error => {
-              console.log(error.response.data);
-              console.log(error.response.status);
-              console.log(error.response.headers);
-              
-              //this.setState({ source: "/src/assets/notFound.jpg"});
-              source = "/src/assets/notFound.jpg";
-          });
+                console.log(error.response.data);
+                console.log(error.response.status);
+                console.log(error.response.headers);
+
+                //this.setState({ source: "/src/assets/notFound.jpg"});
+                //source = "/src/assets/notFound.jpg";
+                //var new_vis_arr_source = this.state.vis_arr_source;
+                //new_vis_arr_source[i] = source;
+                //this.setState({vis_arr_source: new_vis_arr_source});
+                console.log("image in vis_arr not found");
+                //this.getImages(this.state.image_arr[0], 0);
+                this.changeOnClickSkip(i);
+            });
+          
     }
+
+    /*modifyImage(newImages) {
+        
+        if(currentSlid >= 0 && currentSlide < newImages.length) {
+            console.log("kemst inn");
+            newImages[currentSlide] =  <ImageHover visibility={"show-image"} buttons={'no-buttons'} key={i} id={id} theImage={<img alt={id} src={this.state.vis_arr_source[i]} className="hoveredimg d-flex justify-content-center rounded"/>} changeOnClickPosFromContainer={this.changeOnClickPos.bind(this, id, i)} changeOnClickNegFromContainer={this.changeOnClickNeg.bind(this, id, i)} changeOnClickSkipFromContainer={this.changeOnClickSkip.bind(this,i)}/>;
+        }
+
+        return newImages;   
+    }*/
 
     render() {
 
         let data;
-        const Images = this.state.vis_arr.map((id, i) =>
-            <ImageHover key={i} id={id} imageId={id} changeOnClickPosFromContainer={this.changeOnClickPos.bind(this, id, i)} changeOnClickNegFromContainer={this.changeOnClickNeg.bind(this, id, i)} changeOnClickSkipFromContainer={this.changeOnClickSkip.bind(this,id,i)}/>
-        );
+        //const Images = this.state.vis_arr.map((id, i) =>
+        //    <ImageHover key={i} id={id} imageId={id} changeOnClickPosFromContainer={this.changeOnClickPos.bind(this, id, i)} changeOnClickNegFromContainer={this.changeOnClickNeg.bind(this, id, i)} changeOnClickSkipFromContainer={this.changeOnClickSkip.bind(this,id,i)}/>
+        //);
 
-       /* this.state.vis_arr.map((id, i) => this.getImages(id, i));
-       
-        const newImages = this.state.vis_arr.map((id, i) => 
-            <ImageHover key={i} id={id} theImage={<img alt={id} src={this.state.vis_arr_source[i]} className="d-flex justify-content-center rounded"/>}/>);
-        */
-        //console.log("visarr seinna í render: " + this.state.vis_arr)
+        let newImages = [];
+        
+        if (this.state.vis_arr_source.length >= 25)
+        {
+            newImages = this.state.vis_arr.map((id, i) => 
+                <ImageHover visibility={"show-image"} buttons={'no-buttons'} key={i} id={id} theImage={<img alt={id} src={this.state.vis_arr_source[i]} className="hoveredimg d-flex justify-content-center rounded"/>} changeOnClickPosFromContainer={this.changeOnClickPos.bind(this, id, i)} changeOnClickNegFromContainer={this.changeOnClickNeg.bind(this, id, i)} changeOnClickSkipFromContainer={this.changeOnClickSkip.bind(this,i)}/>);
+        }
+
+        let active = this.state.activeSlide; 
+        
+
+        if (active >= -1 && active < newImages.length) {
+            
+            if(active < 0) {
+                active = newImages.length-1;
+            }
+            
+            const thisId = this.state.vis_arr[active];
+            newImages[active] = <ImageHover visibility={"show-image"} buttons={'show-buttons'} key={active} id={thisId} theImage={<img alt={thisId} src={this.state.vis_arr_source[active]} className="hoveredimg d-flex justify-content-center rounded"/>} changeOnClickPosFromContainer={this.changeOnClickPos.bind(this, thisId, active)} changeOnClickNegFromContainer={this.changeOnClickNeg.bind(this, thisId, active)} changeOnClickSkipFromContainer={this.changeOnClickSkip.bind(this,active)}/>;
+        }
+
+       // newImages = this.modifyImage(newImages);
+        
+        let backupImages = [];
+        backupImages = this.state.image_arr.map((id, i) => 
+        <ImageHover visibility={"hidden"} buttons={'show-buttons'} key={i} id={id} theImage={<img alt={id} src={this.state.image_arr_source[i]} className="hoveredimg d-flex justify-content-center rounded"/>} changeOnClickPosFromContainer={this.changeOnClickPos.bind(this, id, i)} changeOnClickNegFromContainer={this.changeOnClickNeg.bind(this, id, i)} changeOnClickSkipFromContainer={this.changeOnClickSkip.bind(this,i)}/>);
+
 
         if (this.state.loading) {
             data = <div className='training'>Round {this.state.round.toString()}</div>
@@ -522,79 +647,78 @@ popup_negative() {
         else {
             data = <div className='training'>Round {this.state.round.toString()}</div>
         }
-        //const Images = Array.from(Array(50).keys()).map((id, i) => <Image key={i} id={id}/>);
-        //console.log("render");
-        //console.log(this.state.vis_arr);
-        //console.log(Images);
+    
+        if(this.state.finished) {
+            return (
+                <h1>Woho you are done, have a nice day!</h1>
+            );
+        }
 
-        return (   
-            <div className="container-fluid" >
-            <div className="row header-room">
-                <div className="col-sm-2">
-                    <Header/> 
+                
+        var sliderSettings = {
+            autoplay: true,
+            autoplaySpeed: 900,
+            infinite: true,
+            speed: 100,
+            slidesToShow: 2,
+            slidesToScroll: 1,
+            easing: "ease-in",
+            centerMode: true,
+            vertical: true,
+            /*rtl: true,*/ 
+            pauseOnHover: false,
+            arrows: false,
+            initialSlide: 0,
+            afterChange: current => this.setState({ activeSlide: current-1 })
+        }
+
+        var settings = {
+            dots: true,
+            infinite: true,
+            speed: 500,
+            slidesToShow: 1,
+            slidesToScroll: 1
+          };
+
+          var slider = <div></div>;
+
+          if(newImages.length >= this.state.numberOfImages) {
+            slider = 
+            <Slider className="main-slider" {...sliderSettings}>
+                {newImages}
+            </Slider>;
+        }
+
+        if(this.state.eyeTrackerMode) {
+            var  eyeTrackerSettings = {
+                cursor: 'none'
+            };
+        }
+        
+        
+        return (
+            <div className="the-container" style={eyeTrackerSettings}>
+                <div className="center">
+                    <Header eyeTrackerStyle={eyeTrackerSettings} updateTheme={this.updateThemeOnClick.bind(this)} updateRandom={this.updateRandomOnClick.bind(this)} resetTheme={this.resetThemeOnClick.bind(this)} resetRandom={this.resetRandomOnClick.bind(this)}/>
                 </div>
-                <div className="col-sm-8">
-                </div>
-            </div>
-            <div className="row">
-                <div className="col-2">
-                    <LeftSidebar timerFromParent={this.state.session_timer} num_posFromParent={this.state.pos_arr.length} num_negFromParent={this.state.neg_arr.length} roundsFromParent={this.state.round} avg_score_timeFromParent={this.state.avg_time} />
-                    <div className="col d-flex reset-room">
-                        <div>
-                            {this.finish}
+                <div className=" center row main-container">
+                    <div className="container">
+                        <div className=" col-md-3 border-extra-pos containers" onMouseEnter={this.test}>
+                            <PositiveContainer posImageIdFromParent={this.state.pos_arr}/>
                         </div>
-                        {/*<div className='p-2 button-p-2'>
-                            <FinishButton finishSessionOnClickFromBtn={this.finishWithoutSavingOnClick.bind(this)}/>
-                        </div>*/}
-                        <div className='p-2 button-p-2'>
-                            <SaveButton saveDataOnClickFromBtn={this.saveOrFinishOnClick.bind(this)}/>
+                        <div className="slider col-md-5">
+                            {slider}
                         </div>
-                    </div>
-                </div>
-                <div className="col-sm-8">
-            <div className="container">
-                <div className="row main">
-                    <div className="border-extra-pos border-success col">
-                            <PositiveContainer posImageIdFromParent={this.state.pos_arr} /*callBackFromParent={this.myCallBack.bind(this)}*//>
-                        </div>
-                        <div className="col-md-auto">
-                            {this.grid(Images,5)}
-                        </div>
-                        <div className="border-extra-neg col">
+                        <div className=" col-md-3 border-extra-neg containers">
                             <NegativeContainer negImageIdFromParent={this.state.neg_arr}/>
                         </div>
+                        <div>
+                            {backupImages}
+                        </div>
                     </div>
-                <div className='row buttons'>
-                    <div className='col d-flex reset-room'>
-                        <div className='col posAllCont'>
-                            {this.popup_positive()}
-                        </div>
-                        <div className='p-2 button-p-2 update-b'>
-                            <UpdateThemeButton updateThemeOnClickFromBtn={this.updateThemeOnClick.bind(this)}/>
-                        </div>
-                        <div className='p-2 button-p-2 update-b'>
-                            <UpdateRandomButton updateRandomOnClickFromBtn={this.updateRandomOnClick.bind(this)}/>
-                        </div>
-                        <div className='p-2 button-p-2'>
-                            <ResetThemeButton resetThemeOnClickFromBtn={this.resetThemeOnClick.bind(this)}/>
-                        </div>
-                        <div className='p-2 button-p-2'>
-                            <ResetRandomButton resetRandomOnClickFromBtn={this.resetRandomOnClick.bind(this)}/>
-                        </div>  
-                        <div className='col negAllCont'>
-                            {this.popup_negative()}
-                        </div> 
-                    </div>
-               
-                
                 </div>
             </div>
-            </div>
-                </div>
-                <div className="row footer-container">
-                        <Footer />
-                </div>
-            </div>   
-        );
+            );
+        
     }
 }
