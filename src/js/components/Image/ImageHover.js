@@ -10,6 +10,7 @@ export default class ImageHover extends React.Component {
        /* this.image = React.createRef();
         this.onhovering = this.onhovering.bind(this);
         this.handleKeyDown = this.handleKeyDown.bind(this);*/
+        this.click = this.click.bind(this);
     }
     
   /*handleKeyDown(event) {
@@ -32,32 +33,54 @@ export default class ImageHover extends React.Component {
   /*onhovering() {
     this.image.current.focus();
   }*/
+  click () {
+    var timeoutId = null;
+    //this.props.changeOnClickPosFromContainer();
+    if (!timeoutId) {
+      timeoutId = window.setTimeout(function() {
+          timeoutId = null;
+          this.props.changeOnClickPosFromContainer();
+        
+      }, 3000);
+}
 
+  /*OnHoverTimer() {
+    var timeoutId;
+
+    this.props.changeOnClickPosFromContainer();
+    
+    if (!timeoutId) {
+      timeoutId = window.setTimeout(function() {
+          timeoutId = null;
+          console.log("HALLO");
+          this.props.changeOnClickPosFromContainer();
   
-  
+      }, 3000);
+    }*/
+
+    /*if (timeoutId) {
+      window.clearTimeout(timeoutId);
+      timeoutId = null;
+    }*/
+  }
   render() {
-  
-    //<div className={this.props.visibility} onMouseEnter={this.onhovering} ref={this.image} onKeyDown={this.handleKeyDown} tabIndex="0">
-
-    //ef maður vill hafa eye-trackerinn í gangi. no-cursor classNameið hide-ar músina bara annars eins
-    /* return (
-      <div className={classnames(this.props.visibility, this.props.buttons, "no-cursor")}>
-        {this.props.theImage}
-        <button onMouseEnter={this.props.changeOnClickPosFromContainer} className="positive btn btn-success btn-sm no-cursor" type="button"><span className="glyphicon glyphicon-plus"></span></button>
-        <button onMouseEnter={this.props.changeOnClickSkipFromContainer} className="skip btn btn-secondary btn-sm no-cursor" type="button"><span className="glyphicon glyphicon-trash"></span></button>
-        <button onMouseEnter={this.props.changeOnClickNegFromContainer} className="negative btn btn-danger btn-sm no-cursor" type="button"><span className="glyphicon glyphicon-minus"></span></button>
-      </div>
-    );*/
 
     return (
-      <div className={classnames(this.props.visibility, this.props.buttons)}>
+      /*<div className={classnames(this.props.visibility, this.props.buttons)}>
         {this.props.theImage}
         <button onMouseEnter={this.props.changeOnClickPosFromContainer} className="positive btn btn-success btn-sm" type="button"><span className="glyphicon glyphicon-plus"></span></button>
         <button onMouseEnter={this.props.changeOnClickSkipFromContainer} className="skip btn btn-secondary btn-sm" type="button"><span className="glyphicon glyphicon-trash"></span></button>
         <button onMouseEnter={this.props.changeOnClickNegFromContainer} className="negative btn btn-danger btn-sm" type="button"><span className="glyphicon glyphicon-minus"></span></button>
+      </div>*/
+      <div className={classnames(this.props.visibility, this.props.buttons)}>
+        {this.props.theImage}
+        <button onMouseEnter={this.click} className="positive btn btn-success btn-sm" type="button"><span className="glyphicon glyphicon-plus"></span></button>
+        <button onMouseOver={this.props.changeOnClickSkipFromContainer} className="skip btn btn-secondary btn-sm" type="button"><span className="glyphicon glyphicon-trash"></span></button>
+        <button onMouseOver={this.props.changeOnClickNegFromContainer} className="negative btn btn-danger btn-sm" type="button"><span className="glyphicon glyphicon-minus"></span></button>
       </div>
     );
 
   }
 }
+
 
