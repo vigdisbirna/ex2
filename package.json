@@ -13,6 +13,7 @@
   "devDependencies": {
     "babel-core": "^6.26.3",
     "babel-loader": "^7.1.4",
+    "babel-plugin-transform-decorators-legacy": "^1.3.5",
     "babel-preset-env": "^1.6.1",
     "babel-preset-react": "^6.24.1",
     "html-loader": "^0.5.5",
@@ -29,12 +30,23 @@
     "axios": "^0.18.0",
     "babel-preset-es2015": "^6.24.1",
     "bootstrap": "^3.3.7",
+    "cookie-parser": "^1.4.3",
     "css-loader": "^0.28.11",
+    "express": "^4.16.3",
+    "mdbreact": "^4.5.1",
     "react-bootstrap": "^0.32.1",
+    "react-cookie": "^2.1.5",
+    "react-cookies": "^0.1.0",
+    "react-countdown-now": "^1.3.0",
+    "react-keydown": "^1.9.7",
     "react-perfect-scrollbar": "^1.1.1",
     "react-scrollbar": "^0.5.4",
+    "react-slick": "^0.23.1",
+    "react-slick-vertical": "^0.11.1",
     "reactjs-popup": "^1.1.1",
-    "style-loader": "^0.21.0"
+    "style-loader": "^0.21.0",
+    "universal-cookie": "^2.1.5",
+    "uuid": "^3.2.1"
   },
   "repository": {
     "type": "git",

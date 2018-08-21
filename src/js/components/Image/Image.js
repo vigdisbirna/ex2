@@ -12,6 +12,7 @@ export default class Image extends React.Component {
         axios
         .get(
             'http://localhost:9999/images/placing-test-thumbnails/' + this.props.imageId.toString() + '.jpg',
+
             { responseType: 'arraybuffer' },
           )
           .then(response => {
@@ -22,6 +23,7 @@ export default class Image extends React.Component {
               ),
             );
             this.setState({ source: "data:;base64," + base64 });
+            //this.setState({source: "/src/assets/notFound.jpg"});
           })
           .catch(error => {
               console.log(error.response.data);
@@ -37,7 +39,9 @@ export default class Image extends React.Component {
         
         axios
         .get(
+
             'http://loaclhost:9999/images/placing-test-thumbnails/' + this.props.imageId.toString() + '.jpg',
+
             { responseType: 'arraybuffer' },
           )
           .then(response => {
@@ -62,7 +66,7 @@ export default class Image extends React.Component {
   render() {
     return (
       <div className="show-image">
-        <img onClick={this.props.changeOnClickFromContainer} src={this.state.source} alt={this.props.imageId} className="d-flex justify-content-center rounded" />
+        <img onClick={this.props.changeOnClickFromContainer} src={this.state.source} alt={this.props.imageId} className="d-flex basic-img justify-content-center rounded" />
       </div>
     );
   }
