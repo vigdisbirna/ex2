@@ -1,4 +1,5 @@
 import React from "react";
+import axios from 'axios'
 import ReactDOM from "react-dom";
 import Header from "./Header";
 import Footer from "./Footer";
@@ -8,24 +9,48 @@ import ImageContainer from "../Container/ImageContainer"
 import Popup from "reactjs-popup";
 
 
+
 export default class Layout extends React.Component {
 
     constructor() {
         super();
         this.state = {
             title: "Exquisitor",
+            
         };
+    }
+
+    componentWillMount() {
+    }
+    
+    componentWillUnmount() {
+        
     }
 
     changeTitle(title) {
         this.setState({title: title});
     }
 
+    /*getCookie() {
+        axios({
+            method: 'get',
+            url: 'http://localhost:5001/getCookie',
+            headers: {
+            'Content-Type': 'application/json',
+            },
+            
+        }).then(res => {
+                var newId = res.data.userId;
+                cookie.save('userId', newId, {path: '/'});
+                this.setState({userId:cookie.load('userId')});
+                console.log("res.data.userId: " + res.data.userId);
+            });
+            
+    }*/
 
     render () {
-
         return (
-            <ImageContainer /> 
+            <ImageContainer/> 
         );
     }
 } 

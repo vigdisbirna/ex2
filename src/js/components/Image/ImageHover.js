@@ -1,77 +1,63 @@
 import React from 'react';
-import axios from 'axios';
 import './Image_style.css';
+import classnames from 'classnames';
+import Countdown from 'react-countdown-now';
 
 export default class ImageHover extends React.Component {
     constructor(props) {
         super(props);
-        this.state = { source: null};
+        this.state = {source: null};
+       /* this.image = React.createRef();
+        this.onhovering = this.onhovering.bind(this);
+        this.handleKeyDown = this.handleKeyDown.bind(this);*/
     }
-
-    componentDidMount() {
-        //this.setState({ source: "/src/assets/black.jpg"});
-        axios
-        .get(
-            'http://localhost:9999/images/placing-test-thumbnails/' + this.props.imageId.toString() + '.jpg',
-            { responseType: 'arraybuffer' },
-          )
-          .then(response => {
-            const base64 = btoa(
-              new Uint8Array(response.data).reduce(
-                (data, byte) => data + String.fromCharCode(byte),
-                '',
-              ),
-            );
-            this.setState({ source: "data:;base64," + base64 });
-          })
-          .catch(error => {
-            if (error.response) {
-              console.log(error.response.data);
-              console.log(error.response.status);
-              console.log(error.response.headers);
-
-              this.setState({ source: "/src/assets/notFound.jpg"});
-            }
-
-          });
-      }
-
-    componentDidUpdate(prevProp) {
-      if(this.props.imageId != prevProp.imageId && this.props.imageId != null) {
-        
-        axios
-        .get(
-            'http://localhost:9999/images/placing-test-thumbnails/' + this.props.imageId.toString() + '.jpg',
-            { responseType: 'arraybuffer' },
-          )
-          .then(response => {
-            const base64 = btoa(
-              new Uint8Array(response.data).reduce(
-                (data, byte) => data + String.fromCharCode(byte),
-                '',
-              ),
-            )
-            this.setState({ source: "data:;base64," + base64 });
-          })
-          .catch(error => {
-              console.log(error.response.data);
-              console.log(error.response.status);
-              console.log(error.response.headers);
-              
-              //this.setState({ source: "/src/assets/notFound.jpg"});
-          });
+    
+  /*handleKeyDown(event) {
+        //right arrow  
+        if(event.keyCode == "39") {
+            this.props.changeOnClickNegFromContainer();
         }
-      }
+        
+        //left arrow
+        else if(event.keyCode == "37") {
+            this.props.changeOnClickPosFromContainer();
+        }
+        
+        //up arrow
+        else if(event.keyCode == "38") {
+            this.props.changeOnClickSkipFromContainer();
+        }      
+  }*/
 
+  /*onhovering() {
+    this.image.current.focus();
+  }*/
+
+  
+  
   render() {
+  
+    //<div className={this.props.visibility} onMouseEnter={this.onhovering} ref={this.image} onKeyDown={this.handleKeyDown} tabIndex="0">
+
+    //ef maður vill hafa eye-trackerinn í gangi. no-cursor classNameið hide-ar músina bara annars eins
+    /* return (
+      <div className={classnames(this.props.visibility, this.props.buttons, "no-cursor")}>
+        {this.props.theImage}
+        <button onMouseEnter={this.props.changeOnClickPosFromContainer} className="positive btn btn-success btn-sm no-cursor" type="button"><span className="glyphicon glyphicon-plus"></span></button>
+        <button onMouseEnter={this.props.changeOnClickSkipFromContainer} className="skip btn btn-secondary btn-sm no-cursor" type="button"><span className="glyphicon glyphicon-trash"></span></button>
+        <button onMouseEnter={this.props.changeOnClickNegFromContainer} className="negative btn btn-danger btn-sm no-cursor" type="button"><span className="glyphicon glyphicon-minus"></span></button>
+      </div>
+    );*/
+
     return (
-      <div className="show-image">
-        <img src={this.state.source} alt={this.props.imageId} className="d-flex justify-content-center rounded" />
-        <input onClick={this.props.changeOnClickPosFromContainer} className="positive btn btn-success btn-sm" type="button" value="+" />
-        <input onClick={this.props.changeOnClickSkipFromContainer} className="skip btn btn-secondary btn-sm" type="button" value="x" />
-        <input onClick={this.props.changeOnClickNegFromContainer} className="negative btn btn-danger btn-sm" type="button" value="-" />
+      <div className={classnames(this.props.visibility, this.props.buttons)}>
+        {this.props.theImage}
+        <button onMouseEnter={this.props.changeOnClickPosFromContainer} className="positive btn btn-success btn-sm" type="button"><span className="glyphicon glyphicon-plus"></span></button>
+        <button onMouseEnter={this.props.changeOnClickSkipFromContainer} className="skip btn btn-secondary btn-sm" type="button"><span className="glyphicon glyphicon-trash"></span></button>
+        <button onMouseEnter={this.props.changeOnClickNegFromContainer} className="negative btn btn-danger btn-sm" type="button"><span className="glyphicon glyphicon-minus"></span></button>
       </div>
     );
+
   }
 }
 

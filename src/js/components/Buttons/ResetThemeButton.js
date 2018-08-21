@@ -7,7 +7,7 @@ export default class ResetThemeButton extends React.Component {
 
     render() {
     	return (
-      		<button onClick={this.props.resetThemeOnClickFromBtn} className='btn btn-warning reset'>Start Over <br/>with Themed Set</button>
+      		<button style={this.props.style} onClick={this.props.resetThemeOnClickFromBtn} className='btn reset'>Start Over <br/>with Themed Set</button>
     	);
   }
 }
