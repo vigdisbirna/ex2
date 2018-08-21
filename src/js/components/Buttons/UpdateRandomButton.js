@@ -7,7 +7,7 @@ export default class UpdateRandomButton extends React.Component {
 
     render() {
     	return (
-      		<button onClick={this.props.updateRandomOnClickFromBtn} className='btn btn-warning reset'>New Random Set</button>
+      		<button style={this.props.style} onClick={this.props.updateRandomOnClickFromBtn} className='btn  reset'>New Random Set</button>
     	);
   }
 }
