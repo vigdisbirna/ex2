@@ -247,8 +247,8 @@ popup_negative() {
         }
     }
 
+    
     changeOnClickPos(img_id,i) {
-        //console.log(img);
         var temp = this.state.vis_arr;
         var arr = this.state.image_arr;
         var temp_source = this.state.vis_arr_source;
@@ -258,7 +258,7 @@ popup_negative() {
         temp_source[i] = arr_source[0];
         
 
-        //console.log("changeOnClick");
+        console.log("changeOnClick");
         //console.log(temp[i]);
         //console.log(i);
 
@@ -666,7 +666,7 @@ popup_negative() {
             centerMode: true,
             vertical: true,
             /*rtl: true,*/ 
-            pauseOnHover: false,
+            pauseOnHover: true,
             arrows: false,
             initialSlide: 0,
             afterChange: current => this.setState({ activeSlide: current-1 })
