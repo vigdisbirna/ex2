@@ -706,7 +706,7 @@ popup_negative() {
                         <div className=" col-md-3 border-extra-pos containers" onMouseEnter={this.test}>
                             <PositiveContainer posImageIdFromParent={this.state.pos_arr}/>
                         </div>
-                        <div className="slider col-md-5">
+                        <div className="slider col-md-5 center-slider">
                             {slider}
                         </div>
                         <div className=" col-md-3 border-extra-neg containers">

@@ -67,10 +67,11 @@ footer {
   justify-content: center;
   position: static;
   max-width: 100%;
+  height: 100%;
 }
 
 .container > div {
-  width: 50%;
+ /* width: 50%;*/
   height: 100%;  
 }
 
@@ -95,8 +96,9 @@ html {
 .slider {
   display: flex;
   justify-content: center;
-  margin-left: auto;
-  margin-right: auto;
+
+  /*margin-left: auto;
+  margin-right: auto;*/
   overflow: hidden;
   /*min-width: 160px;*/
 }
@@ -114,6 +116,7 @@ html {
 }
 
 
+
 div.posAllCont {
   display:flex;
   justify-content:flex-start;
@@ -123,11 +126,11 @@ div.posAllCont {
   padding-bottom:.5rem;
 }
 
-.slick-slider {
-  margin-left: auto;
-  margin-right: auto;
-  width: 100%;
-}
+/*.slick-track {
+  display: flex;
+  justify-content: center;
+ 
+}*/
 
 .logo {
   width: 100%;
@@ -148,6 +151,7 @@ div.posAllCont {
 }
 
 
+
 .center {
   margin-left: auto;
   margin-right: auto;
@@ -166,7 +170,7 @@ h1 {
   background-color: #4D6D9A;
   color: #99CED3;
   height: 30%;
-  margin-bottom: 60px;
+  margin-bottom: 30px;
   border-bottom: 10px solid #99CED3;
   align-items: flex-end;
   display: flex;
@@ -176,11 +180,12 @@ h1 {
 
 .containers {
   /*max-height: 465px;*/
-  min-height: 465px;
+  /*min-height: 465px;*/
   min-width: 230px;
-  max-width: 10%;
-  overflow: auto;
+  overflow:scroll;
 }
+
+
 
 .containers > div {
   height: 90%;
@@ -188,15 +193,28 @@ h1 {
 
 .f-container {
   width: 100%;
-  max-width: 190px;
   margin-left: auto;
   margin-right: auto;
   display: flex;
   flex-wrap: wrap;
 }
 
-.slider .slick-slide {
-  padding-left: 15%;
+.slider {
+  display : flex;
+  justify-content: center;
+  min-height: 100%;
+  align-items: center;
+  
+}
+
+.center-slider > div {
+  /*display: flex;
+  justify-content: center;
+  align-items: center;*/
+  min-width: 80%;
+  margin-left: auto;
+  margin-right: auto;
+  
 }
 
 .basic-img {
@@ -309,8 +327,9 @@ h1 {
 }
 
 
-
 @media screen and (max-height: 650px) {
+ 
+  
   .dropdown {
       display: none;
   }
