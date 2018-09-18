@@ -5,14 +5,14 @@ import ImageHover from "../Image/ImageHover";
 import Image from "../Image/Image";
 import PositiveContainer from "./PositiveContainer";
 import NegativeContainer from "./NegativeContainer";
-import UpdateThemeButton from "../Buttons/UpdateThemeButton";
-import ResetThemeButton from "../Buttons/ResetThemeButton";
-import FinishButton from "../Buttons/FinishButton";
-import SaveButton from "../Buttons/SaveButton";
-import ShowPositive from "../Buttons/ShowPositive";
-import ShowNegative from "../Buttons/ShowNegative";
-import ResetRandomButton from "../Buttons/ResetRandomButton.js";
-import UpdateRandomButton from "../Buttons/UpdateRandomButton.js";
+//import UpdateThemeButton from "../Buttons/UpdateThemeButton";
+//import ResetThemeButton from "../Buttons/ResetThemeButton";
+//import FinishButton from "../Buttons/FinishButton";
+//import SaveButton from "../Buttons/SaveButton";
+//import ShowPositive from "../Buttons/ShowPositive";
+//import ShowNegative from "../Buttons/ShowNegative";
+//import ResetRandomButton from "../Buttons/ResetRandomButton.js";
+//import UpdateRandomButton from "../Buttons/UpdateRandomButton.js";
 import Header from "../Layout/Header";
 import Popup from "reactjs-popup";
 import scrollArea from "react-scrollbar";
@@ -40,7 +40,7 @@ export default class ImageContainer extends React.Component {
                     interval: null, pos_cnt: 0, neg_cnt: 0, 
                     loading: false, round: 0, userId: this.props.userId, finished: false, 
                     testing:true, currentImg: 0, activeSlide:0, positiveOn: false, negativeOn: false,
-                    numberOfImages: 25, eyeTrackerMode: false};
+                    numberOfImages: 25, eyeTrackerMode: true};
         
         //this.modifyImage = this.modifyImage.bind(this);
     }
@@ -659,7 +659,7 @@ popup_negative() {
             autoplay: true,
             autoplaySpeed: 900,
             infinite: true,
-            speed: 100,
+            speed: 900,
             slidesToShow: 2,
             slidesToScroll: 1,
             easing: "ease-in",
@@ -668,17 +668,10 @@ popup_negative() {
             /*rtl: true,*/ 
             pauseOnHover: true,
             arrows: false,
-            initialSlide: 0,
             afterChange: current => this.setState({ activeSlide: current-1 })
         }
 
-        var settings = {
-            dots: true,
-            infinite: true,
-            speed: 500,
-            slidesToShow: 1,
-            slidesToScroll: 1
-          };
+   
 
           var slider = <div></div>;
 

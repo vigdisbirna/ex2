@@ -50,15 +50,16 @@ export default class NegativeContainer extends React.Component {
 
         var settings = {
             autoplay: true,
+            autoplaySpeed: 900,
             dots: true,
             infinite: true,
-            speed: 500,
+            easing: 'ease-in',
+            pauseOnHover: false,
             slidesToShow: 1,
-            slidesToScroll: 1,
             arrows: false,
+            slidesToScroll: 1,
         };
 
-        
 
         return (
             <Slider {...settings}>

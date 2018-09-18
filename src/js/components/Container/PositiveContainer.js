@@ -75,18 +75,21 @@ export default class PositiveContainer extends React.Component {
         this.setState({autoplay:false});
     }
 
+
     render() {
 
         var settings = {
+            autoplay: true,
+            autoplaySpeed: 900,
             dots: true,
             infinite: true,
-            speed: 500,
+            easing: 'ease-in',
+            pauseOnHover: false,
             slidesToShow: 1,
-            slidesToScroll: 1,
             arrows: false,
-            autoplay: true,
-            autoplaySpeed: 2000
-          };
+            slidesToScroll: 1,
+        };
+        
 
         return (
             <Slider {...settings}>

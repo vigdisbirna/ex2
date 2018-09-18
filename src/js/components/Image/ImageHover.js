@@ -6,13 +6,14 @@ import Countdown from 'react-countdown-now';
 export default class ImageHover extends React.Component {
     constructor(props) {
         super(props);
-        this.state = {source: null};
+        this.state = {source: null, eyeTrackerMode:true};
        /* this.image = React.createRef();
         this.onhovering = this.onhovering.bind(this);
         this.handleKeyDown = this.handleKeyDown.bind(this);*/
         this.clickPos = this.clickPos.bind(this);
         this.clickNeg = this.clickNeg.bind(this);
         this.clickSkip = this.clickSkip.bind(this);
+
         //this.OnHoverTimer = this.OnHoverTimer.bind(this);
     }
     
@@ -37,6 +38,9 @@ export default class ImageHover extends React.Component {
     this.image.current.focus();
   }*/
 
+
+
+
   clickPos () {
     var timeoutId = null;
 
@@ -44,7 +48,7 @@ export default class ImageHover extends React.Component {
       timeoutId = window.setTimeout(function() {
           timeoutId = null;
           this.props.changeOnClickPosFromContainer();
-      }.bind(this), 1000);
+      }.bind(this), 1500);
     }
   }
 
@@ -55,7 +59,7 @@ export default class ImageHover extends React.Component {
       timeoutId = window.setTimeout(function() {
           timeoutId = null;
           this.props.changeOnClickSkipFromContainer();
-      }.bind(this), 1000);
+      }.bind(this), 1500);
     }
   }
 
@@ -66,7 +70,7 @@ export default class ImageHover extends React.Component {
       timeoutId = window.setTimeout(function() {
           timeoutId = null;
           this.props.changeOnClickNegFromContainer();
-      }.bind(this), 1000);
+      }.bind(this), 3000);
     }
   }
 
@@ -91,6 +95,12 @@ export default class ImageHover extends React.Component {
 
   render() {
   
+    if(this.state.eyeTrackerMode) {
+      var  eyeTrackerSettings = {
+          cursor: 'none'
+      };
+    }
+
     return (
       /*<div className={classnames(this.props.visibility, this.props.buttons)}>
         {this.props.theImage}
@@ -100,9 +110,9 @@ export default class ImageHover extends React.Component {
       </div>*/
       <div className={classnames(this.props.visibility, this.props.buttons)}>
         {this.props.theImage}
-        <button onMouseEnter={this.clickPos} className="positive btn btn-success btn-sm" type="button"><span className="glyphicon glyphicon-plus"></span></button>
-        <button onMouseEnter={this.clickSkip} className="skip btn btn-secondary btn-sm" type="button"><span className="glyphicon glyphicon-trash"></span></button>
-        <button onMouseEnter={this.clickNeg} className="negative btn btn-danger btn-sm" type="button"><span className="glyphicon glyphicon-minus"></span></button>
+        <button style={eyeTrackerSettings} onMouseEnter={this.clickPos} className="positive btn btn-success btn-sm" type="button"><span className="glyphicon glyphicon-plus"></span></button>
+        <button style={eyeTrackerSettings} onMouseEnter={this.clickSkip} className="skip btn btn-secondary btn-sm" type="button"><span className="glyphicon glyphicon-trash"></span></button>
+        <button style={eyeTrackerSettings} onMouseEnter={this.clickNeg} className="negative btn btn-danger btn-sm" type="button"><span className="glyphicon glyphicon-minus"></span></button>
       </div>
     );
   }

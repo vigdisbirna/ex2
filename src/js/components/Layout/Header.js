@@ -51,14 +51,14 @@ export default class Header extends React.Component {
                     <div className="dropdown">
                         <button className="dropbtn" style={this.props.eyeTrackerStyle}><span className="glyphicon glyphicon-info-sign"></span></button>
                         <div className="dropdown-content info" style={this.props.eyeTrackerStyle}>
-                            <div> 
+                            <div className="names"> 
                                 <ul>
                                     <li>Hanna Ragnarsdóttir</li>
                                     <li>Þórhildur Þorleiksdóttir</li>
                                     <li>Björn Þór Jónsson</li>
                                     <li>Gylfi Þór Guðmundsson</li>
                                     <li>Jan Zahálka</li>
-                                    <li>Stevan Rudinac </li>
+                                    <li>Stevan Rudinac</li>
                                 </ul>
                             </div>
                             <div>
