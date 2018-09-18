@@ -48,7 +48,7 @@ export default class ImageHover extends React.Component {
       timeoutId = window.setTimeout(function() {
           timeoutId = null;
           this.props.changeOnClickPosFromContainer();
-      }.bind(this), 1500);
+      }.bind(this), 1000);
     }
   }
 
@@ -59,7 +59,7 @@ export default class ImageHover extends React.Component {
       timeoutId = window.setTimeout(function() {
           timeoutId = null;
           this.props.changeOnClickSkipFromContainer();
-      }.bind(this), 1500);
+      }.bind(this), 1000);
     }
   }
 
@@ -70,7 +70,7 @@ export default class ImageHover extends React.Component {
       timeoutId = window.setTimeout(function() {
           timeoutId = null;
           this.props.changeOnClickNegFromContainer();
-      }.bind(this), 3000);
+      }.bind(this), 1000);
     }
   }
 
